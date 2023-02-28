@@ -1,0 +1,89 @@
+---
+title: "Introducción"
+author: "César Puebla y Rafaella Monsalve"
+date: "03-07-2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 5
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+      
+#Nivel 1
+##Nivel 2
+###Nivel 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+La presente documentación tiene como objetivo  facilitar la disposición de *script*, archivos, así como tablas de entrada y salida utilizadas para los diferentes cálculos realizados en el marco del Proyecto Fondef IT170006. Con la finalidad de que la información pueda ser ser reutilizada, reproducida o modificada de acuerdo al criterio de los investigadores y  los objetivos que pudiesen surgir de dicho proyecto.
+
+# Contenido {.unnumbered}
+
+Se profundizará en seis contenidos, a saber:
+
+- Procesamiento de datos en Rstudio
+- Tabla de trayectorias
+- Tabla de observaciones
+- Métricas: Stock y flujos
+- NSE a partir del SIMCE
+- Organización de carpetas asociadas
+
+# 1. Procesamiento de datos en Rstudio
+
+Para la secuencia de comandos utilizados en el procesamiento de información y cálculo de métricas, se utilizó la versión de escritorio de Rstudio, que permite localmente obtener resultados de la sintaxis, codificación e indentación del código de R. 
+
+Siendo necesario añadir que previa instalación de Rstudio, se debe instalar entorno de 'R', que compila y ejecuta directamente el lenguaje R para Windows y/o para Rstudio. Ambos links se encuentran a continuación:
+
+
+- [R](https://cran.r-project.org/bin/windows/base/) - HTML a la versión instalable y ejecutable de R 4.0.2. 
+
+- [Rstudio](https://rstudio.com/products/rstudio/download/#download) - HTML a la descarga de la versión más reciente de Rstudio.)
+
+
+## 1.1 Cambio desde SQLSever a Rstudio 
+
+Existe una transición en el procesamiento de los datos y la carga de origen. Durante el año 2019, el análisis de los datos se realizó  en [SQLServer 2012 Standar versión 6.3.9600](https://www.microsoft.com/en-us/download/details.aspx?id=56040) (en adelante SQLServer), en complemento con [RStudio versión 1.1.463](https://rstudio.com/products/rstudio/older-versions/). Actualmente se realiza solo en la última versión de Rstudio.  
+
+
+## 1.2 Justificación
+
+Las tablas utilizadas en SQL se encuentran eliminadas y en algunos casos, continúan siendo utilizadas por diferentes razones, entre ellas:
+ 
+1) Han pasado por un periodo de revisión exhaustiva, siendo posible determinar con antelación debilidades y fortalezas de los análisis basados en estas tablas de origen.
+
+2) Son estables, ya no se realizan cambios en ellas. Por tanto, resultan ideales para sacar una idea general del problema.
+
+3) Determinados análisis como lo son específicamente el cálculo de métricas, dependen de una lógica cuyo producto intermedio (los stocks y los flujos) ya están terminados. 
+
+Por otro lado, las tablas de SQLServer fueron extraidas de este sistema, para ser procesadas fuera de ellas. La principal razón que motivo este cambio, es debido a que al ser Rstudio requiere tres cosas para conectarse a SQLServer:
+
+a. Una conexión segura que permita la comunicación entre máquinas: Lo cual estaba asegurado mediante el servicio otorgado por la VPS (escritorio remoto). 
+
+b. Drivers instalados  para R server: Los cuales en el año 2020 dejaron de ser proporcionados mediante el paquete "RevoScaleR", que permite establecer la conexión entre Rstudio y SQLServer. Entre las limitaciones encontradas se comprobó que:  
+  - El paquete "RevoScaleR" estaba destinado a ser utilizado con un servidor remoto, para procesar el conjunto de datos, sin embargo, se necesita un servidor remoto y una edición completa de SQLServer. 
+  - El paquete no es de fácil instalación, ejecutando "install.packages (" RevoScaleR") como la mayoría de los paquetes R.
+  - Está disponible solo a través de Microsoft R Client, la distribución de R para ciencia de datos.
+  - Está hecha para la versión R 3.5.2, en tanto, la mayor parte de los paquetes utilizados para el análisis corresponden a la versión 4.0.2.
+
+Por las razones anteriores, que las tablas fueron extraidas en formato .CSV. Mientras el procesamiento, e integración de los datos se realizó posteriomente en Rstudio, mediante la compresión de los archivos .CSV, fue realizado en .RDS.
+
+## 1.3 Ubicación archivos
+
+Los archivos de SQLServer corresponden a la entrega anterior, por tanto la explicación del contenido y uso de ellas se encuentra en el siguiente link:
+
+[Carpeta Primera Entrega](https://drive.google.com/drive/folders/1qETfRKrffjLBrmrZjZKY0LxfpMYFOJyu?usp=sharing)  
+
+
+Sin embargo, para efectos de este reporte, en el caso de los datos exportados desde SQLServer a formato CSV, se encuentran en la siguiente carpeta:
+
+[Datos de SQLServer en formato CSV](https://drive.google.com/drive/folders/1sWX1DlqojJBgjq25DBDrAkrSyPIlR3Iq)  
+
+
+
+
+
+

@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="César Puebla R." />
+
+
+<title>Métricas</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Documentación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about.html">Introducción</a>
+</li>
+<li>
+  <a href="procesamiento.html">Proceso en Rstudio</a>
+</li>
+<li>
+  <a href="index.html">Métricas</a>
+</li>
+<li>
+  <a href="nse.html">Nivel Socioeconómico</a>
+</li>
+<li>
+  <a href="TablaTrayectoria.html">Tabla de Trayectorias</a>
+</li>
+<li>
+  <a href="TablaObservaciones.html">Tabla de Observaciones</a>
+</li>
+<li>
+  <a href="anexos.html">Anexos</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Métricas</h1>
+<h4 class="author">César Puebla R.</h4>
+<h4 class="date">03-07-2020</h4>
+
+</div>
+
+
+<div id="métricas-reporte-de-stock-y-flujos" class="section level1">
+<h1>2. Métricas | Reporte de Stock y Flujos</h1>
+<p>Las métricas, es el resultado de un cálculo que se desarrolla en base a la “Planilla de Stock y Flujos”. En esta planilla se encuentra la asignación de los valores del estado de los estudiantes (stock) y su transcurso (flujo) en los años para los cuales hay datos de matrícula 2004 - 2018. Siendo importante señalar que este rango de años de matrícula fue determinado por los requisitos y características propias del Proyecto Fondef IT170006, y se puede incrementar de acuerdo al requerimiento de nuevos objetivos o finalidad que puedan surgir del mismo.</p>
+<div id="composición-de-stock-y-flujos" class="section level2">
+<h2>2.1 Composición de Stock y Flujos</h2>
+<p>Una forma de mirar el fenómeno de la exclusión educativa guarda relación con el movimiento de los estudiantes de un estado a otro. En este sentido, se entenderá como “stock” a una variable numérica que es una cantidad de estudiante en un año determinado, por ejemplo, un total acumulado de la cantidad de estudiantes matriculados en el año 2004 en primero básico.</p>
+<p>Cuando una determinada cantidad de estudiantes aprueba y por tanto pasa de curso, se habla de una transferencia y se mide a través de un flujo, que es la cantidad de estudiantes que pasan de un estado a otro en un año determinado. En el proyecto Fondef IT170006 se identificaron 7 tipos de stock que son profundizados en la cápsula “Definiciones de Stock”. En tanto, se identificaron 27 flujos, que se identifican entre los años 2004 al 2018 y que son profundizados en la cápsula “Definiciones de Flujos”.</p>
+</div>
+<div id="organización-del-contenido" class="section level2 tabset">
+<h2>2.2 Organización del contenido</h2>
+<p>La tabla de salida de las métricas generales y por comuna, son el producto de diferentes cálculos que se especifican en la sección del “Script”. De igual modo, se especificará cuáles fueron las tablas de entrada y de salida, así como las definiciones de Stock y Flujo, en cada cápsula explicada a continuación.</p>
+<div id="script" class="section level3">
+<h3>Script</h3>
+<p>Para el cálculo de las las métricas, al igual que otros componentes de esta documentación, se requiere de un script principal o script primario, que llamará a otros scripts secundarios que se encuentran explicados en los <a href="anexos.html#stockyflujos">Anexos</a></p>
+<p>Este Script primario se llama “EjecutarScripts_comunas.R” y se encuentra en la siguiente ubicación:</p>
+<p><a href="https://drive.google.com/file/d/11QggyCsjfX3hx9FmND5ITLnkXYS6KTV-/view?usp=sharing">EjecutarScripts_Comunas.R</a></p>
+<p>El contenido del Script Primario, es profundizado en el <a href="anexos.html#primario">Anexo | Script Primario</a>, mientras cada uno de los Scripts Secundarios, cuya fuente es ejecutada a través del código ya mencionado, serán profundizados en los <a href="anexos.html#secundario">Anexo | Script Secundarios</a>.</p>
+<ol style="list-style-type: decimal">
+<li>Instalar librerías: En primer lugar, es necesario instalar las siguientes librerías, en caso de estar instaladas simplemente es necesario omitir este paso:</li>
+</ol>
+<pre class="r"><code>rm(list = ls())
+###Instalar LIBRERIAS
+install.packages(&quot;tidyverse&quot;)
+install.packages(&quot;dplyr&quot;)
+install.packages(&quot;readr&quot;)
+install.packages(&quot;foreign&quot;)
+install.packages(&quot;glue&quot;)
+install.packages(&quot;haven&quot;)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Llamar librerías: Una vez instaladas las librerías, no es necesario instalarlas nuevamente, sino que llamarlas a través del comando “library”. Añadiendo también el comando “rm(list = ls())” para remover el contenido y caché del ambiente de trabajo y no sobrecargar el programa.</li>
+</ol>
+<pre class="r"><code>rm(list = ls())
+###Llamar librerías
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Ubicar Directorio: Posteriormente es necesario ubicar el directorio de trabajo mediante el comando “setwd”. En caso de desear cambiar el directorio, simplemente se modifica el contenido de la dirección donde se encuentren las carpetas y archivos del proyecto.</li>
+</ol>
+<pre class="r"><code>setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts&quot;)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Ejecutar Script consecutivos: El siguiente comando “source” es utilizado para ejecutar script que conforma los dataset de “stock y flujos” que se denomina “1.1DataFrame.R” <a href="anexos.html#dataframe">Anexo | Script Secundario : DataFrame.R</a> desde donde se saca la información de “Stock y Flujos” para cada una de las comunas.</li>
+</ol>
+<pre class="r"><code>source(&quot;1.1DataFrame.R&quot;)</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>De forma posterior a la conformación de los dataset de “stock y flujos”, es necesario crear cada una de las carpetas por comuna donde se guardará la información. PAra ello es necesario utilizar el siguiente script.<a href="anexos.html#dataframe">Anexo | Script Secundario : DataFrame.R</a></li>
+</ol>
+<pre class="r"><code>rm(list = ls()) #este comando remueve el contenido del ambiente.
+
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts&quot;)
+source(&quot;1.2GuardarComunas.R&quot;)</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Luego, para cada una de las comunas se crearán los stock y flujos, así como las tablas de incidencia y prevalencia de la exclusión. Para no disminuir la carga de trabajo sobre el servidor y verificar el contenido de las tablas de salida, se dividió el conjunto e 346 comunas en 7 subconjuntos ordenados alfabéticamente:</li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th>Subconjunto</th>
+<th>Comunas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 a 50</td>
+<td>ALGARROBO a COBQUECURA</td>
+</tr>
+<tr class="even">
+<td>51 a 100</td>
+<td>COCHAMO a GENERAL_LAGOS</td>
+</tr>
+<tr class="odd">
+<td>101 a 150</td>
+<td>GORBEA a LONGAVI</td>
+</tr>
+<tr class="even">
+<td>151 a 200</td>
+<td>LONQUIMAY a PALENA</td>
+</tr>
+<tr class="odd">
+<td>201 a 250</td>
+<td>PALMILLA a QUILACO</td>
+</tr>
+<tr class="even">
+<td>251 a 300</td>
+<td>QUILICURA a SAN_PEDRO_DE_LA_PAZ</td>
+</tr>
+<tr class="odd">
+<td>301 a 346</td>
+<td>SAN_RAFAEL a ZAPALLAR</td>
+</tr>
+</tbody>
+</table>
+<p>Siendo importante notar que por cada subconjunto de comunas se ejecutan 3 script: para conformar “stock y flujos”, conformar tabla de “incidencia de la exclusión”, y conformar “prevalencia de la exclusión”.</p>
+<p>Es muy importante, no ejecutar todos los scripts de inmediato, sino que es necesario que Rstudio termine los pasos anteriores, ates de la ejecución de todo lo que viene a continuación.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Subconjunto</th>
+<th>Comunas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 a 50</td>
+<td>ALGARROBO a COBQUECURA</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>####Metricas por comuna####
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;1_50.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;1_50_Incidencia.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;1_50_Prevalencia.R&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Subconjunto</th>
+<th>Comunas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>51 a 100</td>
+<td>COCHAMO a GENERAL_LAGOS</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;51_100.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;51_100_Incidencia.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;51_100_Prevalencia.R&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Subconjunto</th>
+<th>Comunas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>101 a 150</td>
+<td>GORBEA a LONGAVI</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;101_150.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;101_150_Incidencia.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;101_150_Prevalencia.R&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Subconjunto</th>
+<th>Comunas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>151 a 200</td>
+<td>LONQUIMAY a PALENA</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;151_200.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;151_200_Incidencia.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;151_200_Prevalencia.R&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Subconjunto</th>
+<th>Comunas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>201 a 250</td>
+<td>PALMILLA a QUILACO</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;201_250.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;201_250_Incidencia.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;201_250_Prevalencia.R&quot;)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Subconjunto</th>
+<th>Comunas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>251 a 300</td>
+<td>QUILICURA a SAN_PEDRO_DE_LA_PAZ</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;251_300.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;251_300_Incidencia.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;251_300_Prevalencia.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Subconjunto</th>
+<th>Comunas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>301 a 346</td>
+<td>SAN_RAFAEL a ZAPALLAR</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;301_346.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;301_346_Incidencia.R&quot;)
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts_comunas&quot;)
+source(&quot;301_346_Prevalencia.R&quot;)</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Por último se requiere juntar cada uno de los resultados anteriores, así como también renombrar las variables que tienen una nomenclatura poco intuitiva, y luego las tablas de salida se guardaran en la carpeta <a href="Output">output</a></li>
+</ol>
+<pre class="r"><code>#Rbind ------------------------------------------------------------
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts&quot;)
+source(&quot;4.1JuntarStockYFlujos.R&quot;)
+
+
+# Incidencia --------------------------------------------------------------
+
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts&quot;)
+source(&quot;4.2JuntarIncidencia.R&quot;)
+
+
+# Prevalencia -------------------------------------------------------------
+
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts&quot;)
+source(&quot;4.3JuntarPrevalencia.R&quot;)
+
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts&quot;)
+source(&quot;4.4RenombrarYGuardar.R&quot;)</code></pre>
+</div>
+<div id="tablas-de-origen" class="section level3">
+<h3>Tablas de Origen</h3>
+<ol style="list-style-type: decimal">
+<li>Tabla de Stock y Flujos</li>
+</ol>
+<p>Sólo existe una tabla que organiza los stock y flujos, que se encuentra conformada por todos los estudiantes pertenecientes a las cohortes estudiadas en el Fondef. Contiene a todos los estudiantes con estados de stock y transito de flujo, en todos los años para los cuales hay datos de matrícula (2004 - 2018), independiente de si el alumno está matriculado o no. Es decir, si un estudiante ingresó en el año 2005, se creó la observación correspondiente al año 2004, de este modo, si se desglosa la tabla por cada uno de los años, todas deberían tener la misma cantidad de observaciones.</p>
+<p>Tabla en RDS:</p>
+<ul>
+<li><a href="https://drive.google.com/file/d/1X21Q6pubCC4AZ-We0dkcjOlhP51XHA2z/view?usp=sharing">TH_Stock_y_Flujos.rds</a></li>
+</ul>
+<p>Tabla en CSV:</p>
+<ul>
+<li><a href="https://drive.google.com/file/d/17ZZyzRoZweuncpr4O8_9vnNA-zRgmE2m/view?usp=sharing">TH_Stock_y_Flujos.csv</a></li>
+</ul>
+<p>Esta tabla se compone de alrededor de 50 millones de observaciones, sin embargo en el procesamiento se descompone por año, tal como se indica en el <a href="anexos.rmd#secundario">Anexo | 2.3.2 DataFrame.R</a></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Otros atributos del MRUN</li>
+</ol>
+<p>En caso de querer obtener una visión más específica, de los atributos del MRUN, es necesario combinarla con otras tablas que contengan más información de los estudiantes. De igual modo, en <a href="#dataframe">Anexo | 2.3.2 DataFrame.R</a> queda explicado.</p>
+</div>
+<div id="tablas-de-salida" class="section level3">
+<h3>Tablas de salida</h3>
+<p>Corresponde al resultado de la unión de las tablas de incidencia, prevalencia y stock y flujos. Que se genera con el escript que está explicado en [2.2 Organización del Contenido | Script] (#script)</p>
+<pre class="r"><code># PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts&quot;)
+source(&quot;4.4RenombrarYGuardar.R&quot;)</code></pre>
+<p>Considerando lo expuesto se definieron los siguientes términos para el cálculo de los indicadores:</p>
+<ul>
+<li><p>Tramo de edad: Se ha definido que el tramo de edad de la población representada es de 6 a 21 años, adhiriendo a las indicaciones de la Ley General de Educación (Ley 20.370) y el Decreto Supremo 1126 que reglamenta el requisito de edad de 6 años como ingreso a primero básico, así como la Ley 19.876 que establece la obligatoriedad de la educación media hasta los 21 años.</p></li>
+<li><p>Abandono escolar: Refiere a los estudiantes que, habiendo estado matriculados en algún nivel de enseñanza durante el periodo escolar de un año, no están matriculados al año siguiente en ningún establecimiento formal de educación.</p></li>
+<li><p>Exclusión escolar: Refiere a los estudiantes que, habiendo estado matriculados en algún nivel de enseñanza durante el periodo escolar de un año, no están matriculados al año siguiente en ningún establecimiento formal de educación.</p></li>
+<li><p>Tasa de abandono regular: Corresponde a la proporción de estudiantes que se matricularon en enseñanza básica o media formal, y al año siguiente no están matriculados en modalidad básica o media formal, y tampoco habiendo finalizado su educación formal.</p></li>
+<li><p>Tasa de abandono global: Toma en cuenta tanto a la modalidad básica, media, como también la educación de adultos y la educación especial o diferencial. Entonces, la tasa de abandono global es la proporción de estudiantes que se han matriculado en enseñanza básica, media, adulta, y la educación especial o diferencial, que, al año siguiente, no se encuentran matriculados en ningún establecimiento educacional formal, tampoco habiendo finalizado su educación formal.</p></li>
+<li><p>Tasa de incidencia de la exclusión regular: Evalúa la exclusión de estudiantes de la modalidad básica y media formal, en la transición de un año a otro, respondiendo a la pregunta ¿cuántos estudiantes se excluyen año a año en la educación regular? De este modo, la tasa de incidencia de la exclusión regular se entenderá como la proporción de estudiantes que se han matriculado en enseñanza básica o media, no estando matriculados por dos o más años consecutivos, en básica o media formal, sin haber finalizado su educación formal.</p></li>
+<li><p>Tasa de incidencia de la exclusión global: Evalúa la exclusión de los estudiantes de la modalidad básica, media, educación de adultos y la educación especial o diferencial, respondiendo a la pregunta ¿cuántos estudiantes se excluyen año a año del sistema educativo formal? Siendo entonces la proporción de estudiantes que habiendo estado matriculado en modalidad básica, media, educación de adultos y la educación especial o diferencial, no se ha matriculado por dos o más años consecutivos, en algún establecimiento educacional formal, sin haber finalizado su educación formal.</p></li>
+</ul>
+<p>Que en el caso de la incidencia da un resultado con esta estructura:</p>
+<p><img src="Images/Incidencia.png" /></p>
+<p>Por otro lado, en el caso de la Prevalencia se deben tener en cuenta además de los términos anteriores, lo siguientes:</p>
+<ul>
+<li><p>Tasa de prevalencia de la exclusión regular: Refiere a la proporción de estudiantes de la modalidad básica y media formal que estando en un tramo de edad determinado, no han completado sus estudios escolares, como tampoco se encuentra matriculados en ningún establecimiento educacional formal en un periodo, teniendo en cuenta que la proporción se encuentra calculada con respecto a la población.</p></li>
+<li><p>Tasa de prevalencia de la exclusión global: Refiere a la proporción de estudiantes de la modalidad básica media, educación de adultos y la educación especial o diferencial que, en un tramo de edad determinado, no han completado sus estudios escolares, no encontrándose matriculados en ningún establecimiento educacional formal en un periodo, teniendo en cuenta que la proporción se encuentra calculada con respecto a la población.</p></li>
+</ul>
+<p>LA tabla de salida de la prevalencia tiene esta estructura:</p>
+<p><img src="Images/prevalencia.png" /></p>
+</div>
+<div id="defstock" class="section level3">
+<h3>Definición de Stock</h3>
+<p>Una forma de mirar el fenómeno de la exclusión educativa guarda relación con el movimiento de los estudiantes de un estado a otro. En este sentido, se entenderá como “stock” a una variable numérica que es una cantidad de estudiante en un año determinado, por ejemplo, un total acumulado de la cantidad de estudiantes matriculados en el año 2004 en primero básico.</p>
+<p><img src="Images/Stock.png" /></p>
+<p>Lo que se aprecia en la imagen como tipos de Stock: Educación Pre- escolar, Educación regular, Educación Adulta, Graduados de 4° medio, Abandonados Globales, Excluidos Globales y fallecidos. Sin embargo, en el script de R, así como en el contenido de las variables de las tablas originales de Stock y Flujos, los “Stock” se encuentra codificados mediante identificadores.</p>
+<p>En detalle se encuentran explicados cada uno de los Sqtock <a href="anexos.html#mg">Anexo| Métricas Generales</a></p>
+<p>A continuación, se especifica cada uno de los identificadores, el nombre del identificador del Stock, así como la descripción.</p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>StockID</th>
+<th>Nombre del Stock</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rt</td>
+<td>Matrícula Educación Regular</td>
+<td>Estudiante que en el tiempo “t” se encuentra matriculado en la enseñanza regular.</td>
+</tr>
+<tr class="even">
+<td>At_Rt-1</td>
+<td>Abandono Educación Regular</td>
+<td>Estudiante que en el tiempo “t-1” se encontraba en Enseñanza Regular, y en el tiempo “t” se encuentra en Enseñanza Adulta.</td>
+</tr>
+<tr class="odd">
+<td>At_At-1</td>
+<td>Excluidos Educación Regular</td>
+<td>Estudiante que en el tiempo “t-1” se encontraba en Enseñanza Adulta, y en el tiempo “t” se encuentra en Enseñanza Adulta.</td>
+</tr>
+<tr class="even">
+<td>At_Xt-1</td>
+<td>Excluidos Educación Regular</td>
+<td>Estudiante que en el tiempo “t-1” se encontraba en Enseñanza Adulta, y en el tiempo “t” no se encuentra matriculado.</td>
+</tr>
+<tr class="odd">
+<td>Xt_F</td>
+<td>Fallecidos</td>
+<td>Estudiante que se encuentra fallecido</td>
+</tr>
+<tr class="even">
+<td>Xt_G</td>
+<td>Graduados de 4° Medio</td>
+<td>Estudiante que no se encuentra matriculado, debido a que está graduado de 4° medio.</td>
+</tr>
+<tr class="odd">
+<td>Xt_Rt-1</td>
+<td>Abandono Educación Regular</td>
+<td>No Matriculado en “t” y matriculado en Ed. Regular en “t-1”</td>
+</tr>
+<tr class="even">
+<td>Xt_At-1</td>
+<td>Excluidos Educación Regular</td>
+<td>Estudiante no matriculado en “t” y matriculado en enseñanza adulta“t-1”</td>
+</tr>
+<tr class="odd">
+<td>Xt_Xt-1</td>
+<td>Excluidos Educación Regular</td>
+<td>Estudiante no matriculado en “t” y no matriculado en “t-1”</td>
+</tr>
+<tr class="even">
+<td>Xt_XA</td>
+<td>Pre-Escolar</td>
+<td>No Matriculado en t y nunca antes</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="defflujo" class="section level3">
+<h3>Definición de Flujos</h3>
+<p>Una forma de mirar el fenómeno de la exclusión educativa guarda relación con el movimiento de los estudiantes de un estado a otro. Cuando una determinada cantidad de estudiantes aprueba y por tanto pasa de curso, se habla de una transferencia y se mide a través de un flujo, que es la cantidad de estudiantes que pasan de un estado a otro en un año determinado.</p>
+<p><img src="Images/flujo.png" /></p>
+<p>Cada uno de los flujos y la conformación se encuentran detallados en <a href="anexos.html#mg">Anexo| Métricas Generales</a></p>
+<p>A continuación, se especifica cada uno de los identificadores, el nombre del identificador del Flujo, así como la descripción.</p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>FlujoID</th>
+<th>Nombre del Stock</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Matrícula Regular 1a Vez</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_XA y Stock de destino se encontraba en Rt.</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Trayectoria Regular</td>
+<td>Estudiante que en Stock de Origen se encontraba en Rt y Stock de destino se encontraba en Rt en diferente nivel.</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Repitentes</td>
+<td>Estudiante que en Stock de Origen se encontraba en Rt y Stock de destino se encontraba en Rt en igual nivel.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Graduación Regular</td>
+<td>Estudiante que en Stock de Origen se encontraba en Rt y Stock de destino se encontraba en Xt_G.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Matrícula Adulta 1a Vez</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_XA y Stock de destino se encontraba en At_Xt-1.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Graduación Adulta</td>
+<td>Estudiante que en Stock de Origen se encontraba en At y Stock de destino se encontraba en Xt_G.</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Abandono Regular (R -&gt; A)</td>
+<td>Estudiante que en Stock de Origen se encontraba en Rt y Stock de destino se encontraba en At_Rt-1.</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Abandono Global (R -&gt; X)</td>
+<td>Estudiante que en Stock de Origen se encontraba en Rt y Stock de destino se encontraba en Xt_Rt-1.</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Exclusión Regular (R -&gt; A -&gt; A)</td>
+<td>Estudiante que en Stock de Origen se encontraba en At_Rt-1 y Stock de destino se encontraba en At_At-1.</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Exclusión Regular (R -&gt; X -&gt; A)</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_Rt-1 y Stock de destino se encontraba en At_Xt-1.</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Exclusión Regular y Abandono Global (R -&gt; A -&gt; X)</td>
+<td>Estudiante que en Stock de Origen se encontraba en At_Rt-1 y Stock de destino se encontraba en Xt_At-1.</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Exclusión Regular y Global (R -&gt; X -&gt; X)</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_Rt-1 y Stock de destino se encontraba en Xt_Xt-1.</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Exclusión Global (A -&gt; X -&gt; X)</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_At-1 y Stock de destino se encontraba en Xt_Xt-1.</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>Exclusión Global (A -&gt; X)</td>
+<td>Estudiante que en Stock de Origen se encontraba en {At_At-1, At_Xt-1} y Stock de destino se encontraba en Xt.</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>De Adulta a Regular</td>
+<td>Estudiante que en Stock de Origen se encontraba en At y Stock de destino se encontraba en Rt.</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>De Abandonados Globales a Regular</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_Rt-1 y Stock de destino se encontraba en Rt.</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td>De Excluidos Educación Regular a Regular</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_At-1 y Stock de destino se encontraba en Rt.</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>De Excluidos Educación Regular a Adulta</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_At-1 y Stock de destino se encontraba en At.</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td>De Excluidos Globales a Regular</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_Xt-1 y Stock de destino se encontraba en Rt.</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>De Excluidos Globales a Adulta</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_Xt-1 y Stock de destino se encontraba en At.</td>
+</tr>
+<tr class="odd">
+<td>21</td>
+<td>Graduación Asumida por Educación Superior</td>
+<td>Estudiante que no tiene Stock de Origen y Stock de destino se encontraba en Xt_G.</td>
+</tr>
+<tr class="even">
+<td>22</td>
+<td>Fallecen</td>
+<td>Estudiante que no tiene Stock de Origen y Stock de destino se encontraba en Xt_F.</td>
+</tr>
+<tr class="odd">
+<td>23</td>
+<td>Siguen en Pre-Escolar</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_XA y Stock de destino se encontraba en Xt_XA.</td>
+</tr>
+<tr class="even">
+<td>24</td>
+<td>Trayectoria Adulta</td>
+<td>Estudiante que en Stock de Origen se encontraba en {At_At-1, At_Xt-1} y Stock de destino se encontraba en {At_At-1, At_Xt-1}.</td>
+</tr>
+<tr class="odd">
+<td>25</td>
+<td>Siguen Excluidos Globales</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_Xt-1 y Stock de destino se encontraba en Xt_Xt-1.</td>
+</tr>
+<tr class="even">
+<td>26</td>
+<td>Siguen Graduados 4° Medio</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_G y no tienen Stock de destino.</td>
+</tr>
+<tr class="odd">
+<td>27</td>
+<td>Siguen Fallecidos</td>
+<td>Estudiante que en Stock de Origen se encontraba en Xt_F y no tiene Stock de destino.</td>
+</tr>
+<tr class="even">
+<td>254</td>
+<td>Sin información, t+1 en el futuro</td>
+<td>Estudiante que no tiene Stock de Origen o NA, y tampoco Stock de destino o NA en destino.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

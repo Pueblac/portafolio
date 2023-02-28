@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="César Puebla R." />
+
+
+<title>Nivel Socioeconómico</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Documentación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about.html">Introducción</a>
+</li>
+<li>
+  <a href="procesamiento.html">Proceso en Rstudio</a>
+</li>
+<li>
+  <a href="index.html">Métricas</a>
+</li>
+<li>
+  <a href="nse.html">Nivel Socioeconómico</a>
+</li>
+<li>
+  <a href="TablaTrayectoria.html">Tabla de Trayectorias</a>
+</li>
+<li>
+  <a href="TablaObservaciones.html">Tabla de Observaciones</a>
+</li>
+<li>
+  <a href="anexos.html">Anexos</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Nivel Socioeconómico</h1>
+<h4 class="author">César Puebla R.</h4>
+<h4 class="date">10-07-2020</h4>
+
+</div>
+
+
+<div id="nivel-socioeconomico-nse" class="section level1">
+<h1>3. Nivel Socioeconomico | NSE</h1>
+<p>En general lo que se hace y ha hecho la mayoría de la literatura, es generar un índice de NSE en base a la educación del padre, de la madre y el ingreso del hogar, el ingreso solo para algunos años se puede hacer per-cápita, por lo que para ver trayectorias es bueno considerar el ingreso total. El ingreso viene en tramos, lo que se hizo fue poner un punto medio como imputación del ingreso para cada alumno. Luego aplicando análisis factorial exploratorio se obtiene un índice que representa el NSE, da un solo índice dado que se retiene un solo factor.</p>
+<p>Ahora también el presente NSE se basó en clasificación por NSE que hace la Agencia de la calidad en base a los cuestionarios SIMCE, (que ocupa prácticamente las mismas variables que te comenté antes). Como se verá, no se incorporó el IVE-SINAE, sino que se tomó en cuenta el SIMCE que es por estudiante, eliminando así la necesidad de imputar ‘cero’ como valor del IVE a los particulares pagados, ya que no todos los colegios que tienen el IVE-SINAE estimado.</p>
+<div id="composición-del-nse" class="section level2">
+<h2>3.1 Composición del NSE</h2>
+<p>El propósito de la construcción de un NSE diferenciado de los grupos socioeconómicos propuestos por la Agencia de la Calidad, así como también del índice de vulnerabilidad (IVE). Es contar con una herramienta que permita observar una variable continua, que permita comparar más de una observación en distintas distribuciones.</p>
+<p>Es importante señalar que el NSE propuesto en esta sección tiene limitaciones y se basa únicamente en valores administrativos, que el SIMCE ha recolectado desde el año 2004 al 2017. Por tanto, las variables consideradas corresponden a:</p>
+<ol style="list-style-type: decimal">
+<li>Nivel educacional de la madre.</li>
+<li>Nivel educacional del padre.</li>
+<li>Ingreso económico total mensual en el hogar.</li>
+</ol>
+</div>
+<div id="organización-del-contenido" class="section level2 tabset">
+<h2>3.2 Organización del contenido</h2>
+<p>La tabla de salida del NSE, serán el producto de la ejecución del código que especifica en la sección del “Script”. De igual modo, se señalarán cuáles fueron las tablas de entrada y de salida</p>
+<div id="script" class="section level3">
+<h3>Script</h3>
+<p>Para el cálculo del NSE, se utilizará el script denominado “NSE_final.R” y se encuentra en la siguiente ubicación:</p>
+<p><a href="https://drive.google.com/file/d/1qm2qhw7cIjYBjHvYmZNIkPcU0g8olRhY/view?usp=sharing">NSE_final.R</a></p>
+<ol style="list-style-type: decimal">
+<li>Abrir librerías: En primer lugar, es necesario instalar solo una librería, que se utiliza para abrir los archivos csv creados previamente.</li>
+</ol>
+<pre class="r"><code>#Parametros
+rm(list=ls())
+setwd(&quot;C:/FONDEF/SIMCE&quot;)
+
+#librerias
+
+library(readr)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Abrir Ingreso: En primer lugar, se abrirá el ingreso. La conformación del archivo “obs_val_ingrso.csv” requiere de pasos previos, que se detallan en el <a href="anexos.html#nseingreso">Anexo| NSE: obs_val_ingrso</a></li>
+</ol>
+<pre class="r"><code>obs_val_ingreso &lt;- read_delim(&quot;obs_val_ingrso.csv&quot;, 
+                              &quot;;&quot;, escape_double = FALSE, 
+                              col_types = cols_only(MRun = col_guess(),
+                                                    MRunValido = col_guess(), 
+                                                    ingreso = col_guess()), 
+                              locale = locale(decimal_mark = &quot;,&quot;), 
+                              trim_ws = TRUE)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Nivel educacional del padre: La conformación del archivo “obs_val_padre.csv”, al igual que el anterior requiere de pasos previos, que se detallan en el <a href="anexos.html#nsepadre">Anexo| NSE: obs_val_padre</a></li>
+</ol>
+<pre class="r"><code>obs_val_padre &lt;- read_delim(&quot;obs_val_padre.csv&quot;, 
+                              &quot;;&quot;, escape_double = FALSE, 
+                              col_types = cols_only(MRun = col_guess(),
+                                                    MRunValido = col_guess(), 
+                                                    ens_padre = col_guess()), 
+                              locale = locale(decimal_mark = &quot;,&quot;), 
+                              trim_ws = TRUE)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Nivel educacional de la madre: La conformación del archivo “obs_val_madre.csv”, se detallan en el <a href="anexos.html#nsemadre">Anexo| NSE: obs_val_madre</a></li>
+</ol>
+<pre class="r"><code>obs_val_padre$ens_padre[obs_val_padre$ens_padre &gt;= 21] &lt;- 0
+
+obs_val_madre &lt;- read_delim(&quot;obs_val_madre.csv&quot;, 
+                              &quot;;&quot;, escape_double = FALSE, 
+                              col_types = cols_only(MRun = col_guess(),
+                                                    MRunValido = col_guess(), 
+                                                    ens_madre = col_guess()), 
+                              locale = locale(decimal_mark = &quot;,&quot;), 
+                              trim_ws = TRUE)
+
+# Se eliminan los valores superiores a 21.
+summary(obs_val_madre)
+
+obs_val_madre$ens_madre[obs_val_madre$ens_madre &gt;= 21] &lt;- 0</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Tratamiento de repetidos:</li>
+</ol>
+<p>Se revisa la existencia de casos repetidos, y en cada uno de los casos y debido a que no representan un porcentaje mayoritario del total, se decide descartar del proceso, quedandose solo con las obvservaciones que son menores o iguales a 1.</p>
+<p>Este paso se realiza cada vez que se juntan las tablas de ingreso, nivel socioeconómico del padre y de la madre.</p>
+<pre class="r"><code>#REpetidos
+
+ingreso_sinR&lt;-aggregate(obs_val_ingreso$MRun, obs_val_ingreso, length)
+padre_sinR&lt;-aggregate(obs_val_padre$MRun, obs_val_padre, length)
+madre_sinR&lt;-aggregate(obs_val_madre$MRun, obs_val_madre, length)
+
+ingreso_SR &lt;- subset(ingreso_sinR, x &lt;= 1)
+padre_SR &lt;- subset(padre_sinR, x &lt;= 1)
+madre_SR &lt;- subset(madre_sinR, x &lt;= 1)
+
+# Juntar Ingreso y nivel de estudio de la madre
+NSE1 &lt;- merge (x= ingreso_SR,
+              y= madre_SR,
+              by.x = &quot;MRun&quot;,
+              by.y = &quot;MRun&quot;,
+              all.x = TRUE)
+
+Repetidos&lt;-aggregate(NSE1$MRun, NSE1, length)
+NSE1 &lt;- subset(Repetidos, x &lt;= 1)
+
+# Juntar NSE1 y nivel de estudio del padre
+
+NSE2 &lt;- merge (x= NSE1,
+               y= padre_SR,
+               by.x = &quot;MRun&quot;,
+               by.y = &quot;MRun&quot;,
+               all.x = TRUE)
+
+Repetidos&lt;-aggregate(NSE2$MRun, NSE2, length)
+NSE2&lt;- subset(Repetidos, x &lt;= 1)
+
+# Eliminar las variables que no serán utilizadas
+
+names ( NSE2)
+NSE2$MRunValido &lt;- NULL
+NSE2$MRunValido.x &lt;- NULL
+NSE2$MRunValido.y &lt;- NULL
+NSE2$x.x &lt;- NULL
+NSE2$x.x.1 &lt;- NULL
+NSE2$x.y &lt;- NULL
+NSE2$x.y.1 &lt;- NULL
+NSE2$x &lt;- NULL</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Reescalar variables y guardar:</li>
+</ol>
+<p>Se reescalaron de 0 a 1, cada una de las variables que quedaron como columnas en la tabla final y promediaron en NSE2, para que quedara como una columna final:</p>
+<ul>
+<li>Ingreso</li>
+<li>Nivel de Enseñanza de la madre</li>
+<li>Nivel de Enseñanza del padre</li>
+</ul>
+<pre class="r"><code>#Reescalar
+
+
+library(scales)
+NSE2$Esc_Ingreso &lt;-rescale(NSE2$ingreso)
+NSE2$Esc_ens_madre &lt;-rescale(NSE2$ens_madre)
+NSE2$Esc_ens_padre &lt;-rescale(NSE2$ens_padre)
+
+names(NSE2)
+
+NSE2$NSE = rowMeans (NSE2[ , 5:7])
+head (NSE2)
+
+NSE2$NSE &lt;- ifelse (NSE2$Esc_Ingreso == 0 &amp; 
+                      NSE2$Esc_ens_madre == 0 &amp; 
+                      NSE2$Esc_ens_padre == 0, &quot;NA&quot;, NSE2$NSE)
+
+
+names(NSE2)
+
+setwd(&quot;C:/FONDEF/SIMCE&quot;)
+write.csv2(NSE2, file = &quot; NSE2.csv&quot;, row.names = FALSE)
+saveRDS(NSE2, &quot;NSE.rds&quot;)</code></pre>
+</div>
+<div id="tablas-de-origen" class="section level3">
+<h3>Tablas de Origen</h3>
+<ol style="list-style-type: decimal">
+<li><a href="https://drive.google.com/file/d/1IUwrIv17Ya5K_AdOGvrT1YYd_NFAGYcC/view?usp=sharing">Nivel educacional de la madre</a></li>
+<li><a href="https://drive.google.com/file/d/1FUSchhfyWJl_1coK996ql5fKMYqKgnjX/view?usp=sharing">Nivel educacional del padre</a></li>
+<li><a href="https://drive.google.com/file/d/1FUSchhfyWJl_1coK996ql5fKMYqKgnjX/view?usp=sharing">Ingreso económico total mensual en el hogar</a></li>
+</ol>
+</div>
+<div id="tablas-de-salida" class="section level3">
+<h3>Tablas de salida</h3>
+<ol style="list-style-type: decimal">
+<li><a href="https://drive.google.com/file/d/1WoPe_VB83kxGtHWRNNVpJvtaKuY3TAUo/view?usp=sharing">Nivel Socioeconómico</a></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

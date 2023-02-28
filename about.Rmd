@@ -1,0 +1,38 @@
+---
+title: "Introducción"
+author: "César Puebla y Rafaella Monsalve"
+date: "03-07-2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 5
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+      
+#Nivel 1
+##Nivel 2
+###Nivel 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+La presente documentación tiene como objetivo  facilitar la disposición de *script*, archivos, así como tablas de entrada y salida utilizadas para los diferentes cálculos realizados en el marco del Proyecto Fondef IT170006. Con la finalidad de que la información pueda ser ser reutilizada, reproducida o modificada de acuerdo al criterio de los investigadores y  los objetivos que pudiesen surgir de dicho proyecto.
+
+# Contenido {.unnumbered}
+
+Se profundizará en seis contenidos, a saber:
+
+- Procesamiento de datos en Rstudio: Tiene en cuenta aspectos técnicos del uso de Rstudio, así como justificación del cambio desde SQLServer a Rstudio. 
+- Métricas: Se revisarán Stock y flujos, así como el modo de llegar a la prevalencia e incidencia como  principales productos.
+- NSE a partir del SIMCE: Trata del Nivel Socioeconómico, como cálculo surgido del ingreso familiar, nivel de estudios del padre y de la madre, a partir de datos administrativos provenientes del SIMCE.
+- Tabla de trayectorias: Tabla que reúne los datos de los estudiantes de las cohortes estudiadas (2004 a 2008), en tanto, el alcance es hasta el año 2018. 
+- Tabla de observaciones:Tabla que resume los datos de los estudiantes de la tabla de trayectorias.
+
+Excluyendo el tema inicial que refiere al software procesamiento de datos, Cada uno de los ítems anteriormente mencionados, se encontrará subdividido en tres ámbitos: tablas de origen; script; y tablas de salida.
+
+
+
+

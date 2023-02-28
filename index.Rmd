@@ -1,0 +1,665 @@
+---
+title: "Métricas"
+author: "César Puebla R."
+date: "03-07-2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 5
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+      
+#Nivel 1
+##Nivel 2
+###Nivel 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# 2. Métricas | Reporte de Stock y Flujos
+
+Las métricas, es el resultado de un cálculo que se desarrolla en base a la "Planilla de Stock y Flujos". En esta planilla se encuentra la asignación de los valores del estado de los estudiantes (stock) y su transcurso (flujo) en los años para los cuales hay datos de matrícula 2004 - 2018. Siendo importante
+señalar que este rango de años de matrícula fue determinado por los requisitos y características propias del Proyecto Fondef IT170006, y se puede incrementar de acuerdo al requerimiento de nuevos objetivos o finalidad que puedan surgir del mismo.
+
+## 2.1 Composición de Stock y Flujos
+
+Una forma de mirar el fenómeno de la exclusión educativa guarda relación con el movimiento de los estudiantes de un estado a otro. En este sentido, se entenderá como “stock” a una variable numérica que es una cantidad de estudiante en un año determinado, por ejemplo, un total acumulado de la cantidad de estudiantes matriculados en el año 2004 en primero básico.
+
+Cuando una determinada cantidad de estudiantes aprueba y por tanto pasa de curso, se habla de una transferencia y se mide a través de un flujo, que es la cantidad de estudiantes que pasan de un estado a otro en un año determinado. En el proyecto Fondef IT170006 se identificaron 7 tipos de stock que son profundizados en la cápsula "Definiciones de Stock". En tanto, se identificaron 27 flujos, que se identifican entre los años 2004 al 2018 y que son profundizados en la cápsula "Definiciones de Flujos". 
+
+
+## 2.2 Organización del contenido {.tabset}
+
+La tabla de salida de las métricas generales y por comuna, son el producto de diferentes cálculos que se especifican en la sección del "Script". De igual modo, se especificará cuáles fueron las tablas de entrada y de salida, así como las definiciones de Stock y Flujo, en cada cápsula explicada a continuación. 
+
+
+### Script {#script}
+
+Para el cálculo de las las métricas, al igual que otros componentes de esta documentación, se requiere de un script principal o script primario, que llamará a otros scripts secundarios que se encuentran explicados en los [Anexos](anexos.html#stockyflujos) 
+
+Este Script primario se llama "EjecutarScripts_comunas.R" y se encuentra en la siguiente ubicación:
+
+[EjecutarScripts_Comunas.R](https://drive.google.com/file/d/11QggyCsjfX3hx9FmND5ITLnkXYS6KTV-/view?usp=sharing)
+
+El contenido del Script Primario, es profundizado en el [Anexo | Script Primario](anexos.html#primario), mientras cada uno de los Scripts Secundarios, cuya fuente es ejecutada a través del código ya mencionado, serán profundizados en los [Anexo | Script Secundarios](anexos.html#secundario).
+
+1) Instalar librerías: En primer lugar, es necesario instalar las siguientes librerías, en caso de estar instaladas simplemente es necesario omitir este paso:
+
+```{r eval = FALSE}
+rm(list = ls())
+###Instalar LIBRERIAS
+install.packages("tidyverse")
+install.packages("dplyr")
+install.packages("readr")
+install.packages("foreign")
+install.packages("glue")
+install.packages("haven")
+
+```
+
+2) Llamar librerías: Una vez instaladas las librerías, no es necesario instalarlas nuevamente, sino que llamarlas a través del comando "library". Añadiendo también el comando "rm(list = ls())" para remover el contenido y caché del ambiente de trabajo y no sobrecargar el programa.
+
+```{r eval = FALSE}
+rm(list = ls())
+###Llamar librerías
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+```
+
+3) Ubicar Directorio: Posteriormente es necesario ubicar el directorio de trabajo mediante el comando "setwd". En caso de desear cambiar el directorio, simplemente se modifica el contenido de la dirección donde se encuentren las carpetas y archivos del proyecto.
+
+```{r eval = FALSE}
+
+
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts")
+
+
+```
+
+4) Ejecutar Script consecutivos: El siguiente comando "source" es utilizado para ejecutar script que conforma los dataset de "stock y flujos" que se denomina "1.1DataFrame.R" [Anexo | Script Secundario : DataFrame.R](anexos.html#dataframe) desde donde se saca la información de "Stock y Flujos" para cada una de las comunas.
+
+```{r eval = FALSE}
+
+source("1.1DataFrame.R")
+
+```
+
+5) De forma posterior a la conformación de los dataset de  "stock y flujos", es necesario crear cada una de las carpetas por comuna donde se guardará la información. PAra ello es necesario utilizar el siguiente script.[Anexo | Script Secundario : DataFrame.R](anexos.html#dataframe)
+
+```{r eval = FALSE}
+
+rm(list = ls()) #este comando remueve el contenido del ambiente.
+
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts")
+source("1.2GuardarComunas.R")
+
+```
+
+6) Luego, para cada una de las comunas se crearán los stock y flujos, así como las tablas de incidencia y prevalencia de la exclusión.  Para no disminuir la carga de trabajo sobre el servidor y verificar el contenido de las tablas de salida, se dividió el conjunto e 346 comunas en 7 subconjuntos ordenados alfabéticamente:
+
+
+Subconjunto |  Comunas | 
+------------| ---------|
+1 a 50 | ALGARROBO a COBQUECURA
+51 a 100 | COCHAMO a GENERAL_LAGOS
+101 a 150 | GORBEA a LONGAVI
+151 a 200 | LONQUIMAY a PALENA
+201 a 250 | PALMILLA a QUILACO
+251 a 300 | QUILICURA a SAN_PEDRO_DE_LA_PAZ
+301 a 346 | SAN_RAFAEL a ZAPALLAR
+
+
+Siendo importante notar que por cada subconjunto de comunas se ejecutan 3 script: para conformar "stock y flujos", conformar tabla de "incidencia de la exclusión", y conformar "prevalencia de la exclusión". 
+
+Es muy importante, no ejecutar todos los scripts de inmediato, sino que es necesario que Rstudio termine los pasos anteriores, ates de la ejecución de todo lo que viene a continuación. 
+
+
+Subconjunto |  Comunas | 
+------------| ---------|
+1 a 50 | ALGARROBO a COBQUECURA
+
+
+```{r eval = FALSE}
+
+####Metricas por comuna####
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("1_50.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("1_50_Incidencia.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("1_50_Prevalencia.R")
+```
+
+Subconjunto |  Comunas | 
+------------| ---------|
+51 a 100 | COCHAMO a GENERAL_LAGOS
+
+```{r eval = FALSE}
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("51_100.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("51_100_Incidencia.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("51_100_Prevalencia.R")
+```
+
+Subconjunto |  Comunas | 
+------------| ---------|
+101 a 150 | GORBEA a LONGAVI
+
+```{r eval = FALSE}
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("101_150.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("101_150_Incidencia.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("101_150_Prevalencia.R")
+```
+
+Subconjunto |  Comunas | 
+------------| ---------|
+151 a 200 | LONQUIMAY a PALENA
+
+```{r eval = FALSE}
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("151_200.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("151_200_Incidencia.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("151_200_Prevalencia.R")
+```
+
+
+Subconjunto |  Comunas | 
+------------| ---------|
+201 a 250 | PALMILLA a QUILACO
+
+```{r eval = FALSE}
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("201_250.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("201_250_Incidencia.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("201_250_Prevalencia.R")
+```
+
+Subconjunto |  Comunas | 
+------------| ---------|
+251 a 300 | QUILICURA a SAN_PEDRO_DE_LA_PAZ
+
+
+
+```{r eval = FALSE}
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("251_300.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("251_300_Incidencia.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("251_300_Prevalencia.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+```
+
+Subconjunto |  Comunas | 
+------------| ---------|
+301 a 346 | SAN_RAFAEL a ZAPALLAR
+
+```{r eval = FALSE}
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("301_346.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("301_346_Incidencia.R")
+
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+#Ejecutar Scripts por Región
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts_comunas")
+source("301_346_Prevalencia.R")
+
+```
+
+7) Por último se requiere juntar cada uno de los resultados anteriores, así como también renombrar las variables que tienen una nomenclatura poco intuitiva, y luego las tablas de salida se guardaran  en la carpeta [output](Output)
+
+```{r eval = FALSE}
+
+#Rbind ------------------------------------------------------------
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts")
+source("4.1JuntarStockYFlujos.R")
+
+
+# Incidencia --------------------------------------------------------------
+
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts")
+source("4.2JuntarIncidencia.R")
+
+
+# Prevalencia -------------------------------------------------------------
+
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts")
+source("4.3JuntarPrevalencia.R")
+
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts")
+source("4.4RenombrarYGuardar.R")
+
+```
+
+### Tablas de Origen
+
+1. Tabla de Stock y Flujos
+
+Sólo existe una tabla que organiza los stock y flujos, que se encuentra conformada por todos los estudiantes pertenecientes a las cohortes estudiadas en el Fondef. Contiene a todos los estudiantes con estados de stock y transito de flujo, en todos los años para los cuales hay datos de matrícula (2004 - 2018), independiente de si el alumno está matriculado o no.  Es decir, si un estudiante ingresó en el año 2005, se creó la observación correspondiente al año 2004, de este modo, si se desglosa la tabla por cada uno de los años, todas deberían tener la misma cantidad de observaciones.
+
+Tabla en RDS:
+
+- [TH_Stock_y_Flujos.rds](https://drive.google.com/file/d/1X21Q6pubCC4AZ-We0dkcjOlhP51XHA2z/view?usp=sharing)
+
+Tabla en CSV:
+
+- [TH_Stock_y_Flujos.csv](https://drive.google.com/file/d/17ZZyzRoZweuncpr4O8_9vnNA-zRgmE2m/view?usp=sharing)
+
+Esta tabla se compone de alrededor de 50 millones de observaciones, sin embargo en el procesamiento se descompone por año, tal como se indica en el [Anexo | 2.3.2 DataFrame.R](anexos.rmd#secundario)
+
+2. Otros atributos del MRUN
+
+En caso de querer obtener una visión más específica, de los atributos del MRUN, es necesario combinarla con otras tablas que contengan más información de los estudiantes. De igual modo, en [Anexo | 2.3.2 DataFrame.R](#dataframe) queda explicado.
+
+### Tablas de salida
+
+Corresponde al resultado de la unión de las tablas de incidencia, prevalencia y stock y flujos. Que se genera con el escript que está explicado en [2.2 Organización del Contenido | Script] (#script)
+
+```{r eval = FALSE}
+# PARAMETROS
+rm(list = ls())
+###LIBRERIAS
+library(tidyverse)
+library(dplyr)
+library(readr)
+library(foreign)
+library(glue)
+library(haven)
+
+setwd("C:/FONDEF/StockyFlujos/regiones/Scripts")
+source("4.4RenombrarYGuardar.R")
+```
+
+Considerando lo expuesto se definieron los siguientes términos para el cálculo de los indicadores:
+
+-	Tramo de edad: Se ha definido que el tramo de edad de la población representada es de 6 a 21 años, adhiriendo a las indicaciones de la Ley General de Educación (Ley 20.370) y el Decreto Supremo 1126 que reglamenta el requisito de edad de 6 años como ingreso a primero básico, así como la Ley 19.876 que establece la obligatoriedad de la educación media hasta los 21 años.
+
+-	Abandono escolar: Refiere a los estudiantes que, habiendo estado matriculados en algún nivel de enseñanza durante el periodo escolar de un año, no están matriculados al año siguiente en ningún establecimiento formal de educación.
+
+-	Exclusión escolar: Refiere a los estudiantes que, habiendo estado matriculados en algún nivel de enseñanza durante el periodo escolar de un año, no están matriculados al año siguiente en ningún establecimiento formal de educación.
+
+-	Tasa de abandono regular: Corresponde a la proporción de estudiantes que se matricularon en enseñanza básica o media formal, y al año siguiente no están matriculados en modalidad básica o media formal, y tampoco habiendo finalizado su educación formal.
+
+-	Tasa de abandono global: Toma en cuenta tanto a la modalidad básica, media, como también la educación de adultos y la educación especial o diferencial. Entonces, la tasa de abandono global es la proporción de estudiantes que se han matriculado en enseñanza básica, media, adulta, y la educación especial o diferencial, que, al año siguiente, no se encuentran matriculados en ningún establecimiento educacional formal, tampoco habiendo finalizado su educación formal.
+
+-	Tasa de incidencia de la exclusión regular: Evalúa la exclusión de estudiantes de la modalidad básica y media formal, en la transición de un año a otro, respondiendo a la pregunta ¿cuántos estudiantes se excluyen año a año en la educación regular? De este modo, la tasa de incidencia de la exclusión regular se entenderá como la proporción de estudiantes que se han matriculado en enseñanza básica o media, no estando matriculados por dos o más años consecutivos, en básica o media formal, sin haber finalizado su educación formal.
+
+-	Tasa de incidencia de la exclusión global: Evalúa la exclusión de los estudiantes de la modalidad básica, media, educación de adultos y la educación especial o diferencial, respondiendo a la pregunta ¿cuántos estudiantes se excluyen año a año del sistema educativo formal? Siendo entonces la proporción de estudiantes que habiendo estado matriculado en modalidad básica, media, educación de adultos y la educación especial o diferencial, no se ha matriculado por dos o más años consecutivos, en algún establecimiento educacional formal, sin haber finalizado su educación formal.
+
+Que en el caso de la incidencia da un resultado con esta estructura:
+
+![](C:/Mi unidad/SegundaEntrega/FondefIT170006.github.io/Images/Incidencia.png)
+
+
+Por otro lado, en el caso de la Prevalencia se deben tener en cuenta además de los términos anteriores, lo siguientes:
+
+-	Tasa de prevalencia de la exclusión regular: Refiere a la proporción de estudiantes de la modalidad básica y media formal que estando en un tramo de edad determinado, no han completado sus estudios escolares, como tampoco se encuentra matriculados en ningún establecimiento educacional formal en un periodo, teniendo en cuenta que la proporción se encuentra calculada con respecto a la población.
+
+-	Tasa de prevalencia de la exclusión global: Refiere a la proporción de estudiantes de la modalidad básica media, educación de adultos y la educación especial o diferencial que, en un tramo de edad determinado, no han completado sus estudios escolares, no encontrándose matriculados en ningún establecimiento educacional formal en un periodo, teniendo en cuenta que la proporción se encuentra calculada con respecto a la población.
+
+
+LA tabla de salida de la prevalencia tiene esta estructura:
+
+![](C:/Mi unidad/SegundaEntrega/FondefIT170006.github.io/Images/prevalencia.png)
+
+
+
+### Definición de Stock {#defstock}
+
+Una forma de mirar el fenómeno de la exclusión educativa guarda relación con el movimiento de los estudiantes de un estado a otro. En este sentido, se entenderá como “stock” a una variable numérica que es una cantidad de estudiante en un año determinado, por ejemplo, un total acumulado de la cantidad de estudiantes matriculados en el año 2004 en primero básico. 
+
+![](C:/Mi unidad/SegundaEntrega/FondefIT170006.github.io/Images/stock.png)
+
+
+Lo que se aprecia en la imagen como tipos de Stock: Educación Pre- escolar, Educación regular, Educación Adulta, Graduados de 4° medio, Abandonados Globales, Excluidos Globales y fallecidos. Sin embargo, en el script de R, así como en el contenido de las variables de las tablas originales de Stock y Flujos, los "Stock" se encuentra codificados mediante identificadores. 
+
+En detalle se encuentran explicados cada uno de los Sqtock [Anexo| Métricas Generales ](anexos.html#mg)
+
+A continuación, se especifica cada uno de los identificadores, el nombre del identificador del Stock, así como la descripción.
+ 
+StockID | Nombre del Stock |Descripción      | 
+--------| -----------------|-----------------|
+Rt | Matrícula Educación Regular | Estudiante que en el tiempo "t" se encuentra matriculado en la enseñanza regular.
+At_Rt-1 | Abandono Educación Regular | Estudiante que en el tiempo "t-1" se encontraba en Enseñanza Regular, y en el tiempo "t" se encuentra en Enseñanza Adulta.
+At_At-1 | Excluidos Educación Regular |Estudiante que en el tiempo "t-1" se encontraba en Enseñanza Adulta, y en el tiempo "t" se encuentra en Enseñanza Adulta.
+At_Xt-1 | Excluidos Educación Regular |Estudiante que en el tiempo "t-1" se encontraba en Enseñanza Adulta, y en el tiempo "t" no se encuentra matriculado.
+Xt_F  | Fallecidos |Estudiante que se encuentra fallecido
+Xt_G | Graduados de 4° Medio | Estudiante que no se encuentra matriculado, debido a que está graduado de 4° medio.
+Xt_Rt-1 | Abandono Educación Regular | No Matriculado en "t" y matriculado en Ed. Regular en "t-1" |
+Xt_At-1 | Excluidos Educación Regular | Estudiante no matriculado en "t" y matriculado en enseñanza adulta"t-1"
+Xt_Xt-1 | Excluidos Educación Regular | Estudiante no matriculado en "t" y no matriculado en "t-1"
+Xt_XA | Pre-Escolar | No Matriculado en t y nunca antes
+
+
+
+### Definición de Flujos {#defflujo}
+
+
+Una forma de mirar el fenómeno de la exclusión educativa guarda relación con el movimiento de los estudiantes de un estado a otro. Cuando una determinada cantidad de estudiantes aprueba y por tanto pasa de curso, se habla de una transferencia y se mide a través de un flujo, que es la cantidad de estudiantes que pasan de un estado a otro en un año determinado.
+
+![](C:/Mi unidad/SegundaEntrega/FondefIT170006.github.io/Images/Flujo.png)
+
+
+Cada uno de los flujos y la conformación se encuentran detallados en [Anexo| Métricas Generales ](anexos.html#mg)
+
+A continuación, se especifica cada uno de los identificadores, el nombre del identificador del Flujo, así como la descripción.
+ 
+FlujoID | Nombre del Stock |Descripción      | 
+--------| -----------------|-----------------|
+1 | Matrícula Regular 1a Vez | Estudiante que en Stock de Origen se encontraba en Xt_XA	y Stock de destino se encontraba en Rt.
+2 | Trayectoria Regular | Estudiante que en Stock de Origen se encontraba en Rt	y Stock de destino se encontraba en Rt en diferente nivel.
+3 | Repitentes | Estudiante que en Stock de Origen se encontraba en Rt	y Stock de destino se encontraba en Rt en igual nivel.
+4 | Graduación Regular | Estudiante que en Stock de Origen se encontraba en Rt	y Stock de destino se encontraba en Xt_G.
+5 | Matrícula Adulta 1a Vez | Estudiante que en Stock de Origen se encontraba en Xt_XA	y Stock de destino se encontraba en At_Xt-1.
+6 | Graduación Adulta |Estudiante que en Stock de Origen se encontraba en At	y Stock de destino se encontraba en Xt_G.
+7 | Abandono Regular (R -> A) |Estudiante que en Stock de Origen se encontraba en Rt	y Stock de destino se encontraba en At_Rt-1.
+8 | Abandono Global (R -> X) |Estudiante que en Stock de Origen se encontraba en Rt	y Stock de destino se encontraba en Xt_Rt-1.
+9 | Exclusión Regular (R -> A -> A) |Estudiante que en Stock de Origen se encontraba en At_Rt-1	y Stock de destino se encontraba en At_At-1.
+10 | Exclusión Regular (R -> X -> A) |Estudiante que en Stock de Origen se encontraba en Xt_Rt-1	y Stock de destino se encontraba en At_Xt-1.
+11 | Exclusión Regular y Abandono Global (R -> A -> X) |Estudiante que en Stock de Origen se encontraba en At_Rt-1	y Stock de destino se encontraba en Xt_At-1.
+12 | Exclusión Regular y Global (R -> X -> X) |Estudiante que en Stock de Origen se encontraba en Xt_Rt-1	y Stock de destino se encontraba en Xt_Xt-1.
+13 | Exclusión Global (A -> X -> X) |Estudiante que en Stock de Origen se encontraba en Xt_At-1	y Stock de destino se encontraba en Xt_Xt-1.
+14 | Exclusión Global (A -> X) |Estudiante que en Stock de Origen se encontraba en {At_At-1, At_Xt-1}	y Stock de destino se encontraba en Xt.
+15 | De Adulta a Regular |Estudiante que en Stock de Origen se encontraba en At	y Stock de destino se encontraba en Rt.
+16 | De Abandonados Globales a Regular |Estudiante que en Stock de Origen se encontraba en Xt_Rt-1	y Stock de destino se encontraba en Rt.
+17 | De Excluidos Educación Regular a Regular |Estudiante que en Stock de Origen se encontraba en Xt_At-1	y Stock de destino se encontraba en Rt.
+18 | De Excluidos Educación Regular a Adulta |Estudiante que en Stock de Origen se encontraba en Xt_At-1	y Stock de destino se encontraba en At.
+19 | De Excluidos Globales a Regular |Estudiante que en Stock de Origen se encontraba en Xt_Xt-1	y Stock de destino se encontraba en Rt.
+20 | De Excluidos Globales a Adulta |Estudiante que en Stock de Origen se encontraba en Xt_Xt-1	y Stock de destino se encontraba en At.
+21 | Graduación Asumida por Educación Superior |Estudiante que no tiene Stock de Origen y Stock de destino se encontraba en Xt_G.
+22 | Fallecen |Estudiante que no tiene Stock de Origen y Stock de destino se encontraba en Xt_F.
+23 | Siguen en Pre-Escolar |Estudiante que en Stock de Origen se encontraba en Xt_XA	y Stock de destino se encontraba en Xt_XA.
+24 | Trayectoria Adulta |Estudiante que en Stock de Origen se encontraba en {At_At-1, At_Xt-1}	y Stock de destino se encontraba en {At_At-1, At_Xt-1}.
+25 | Siguen Excluidos Globales |Estudiante que en Stock de Origen se encontraba en Xt_Xt-1	y Stock de destino se encontraba en Xt_Xt-1.
+26 | Siguen Graduados 4° Medio |Estudiante que en Stock de Origen se encontraba en Xt_G	y no tienen Stock de destino.
+27 | Siguen Fallecidos |Estudiante que en Stock de Origen se encontraba en Xt_F	y no tiene Stock de destino.
+254| Sin información, t+1 en el futuro |Estudiante que no tiene Stock de Origen o NA, y tampoco Stock de destino o NA en destino.

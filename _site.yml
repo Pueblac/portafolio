@@ -1,0 +1,21 @@
+name: "FondefIT170006"
+output_dir: "."
+navbar:
+  title: "Documentación"
+  left:
+    - text: "Introducción"
+      href: about.html
+    - text: "Proceso en Rstudio"
+      href: procesamiento.html
+    - text: "Métricas"
+      href: index.html
+    - text: "Nivel Socioeconómico"
+      href: nse.html
+    - text: "Tabla de Trayectorias"
+      href: TablaTrayectoria.html
+    - text: "Tabla de Observaciones"
+      href: TablaObservaciones.html
+    - text: "Anexos"
+      href: anexos.html
+
+      

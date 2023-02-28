@@ -1,0 +1,213 @@
+---
+title: "Nivel Socioeconómico"
+author: "César Puebla R."
+date: "10-07-2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 5
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+      
+#Nivel 1
+##Nivel 2
+###Nivel 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# 3. Nivel Socioeconomico | NSE
+
+En general lo que se hace y ha hecho la mayoría de la literatura, es generar un índice de NSE en base a la educación del padre, de la madre y el ingreso del hogar, el ingreso solo para algunos años se puede hacer per-cápita, por lo que para ver trayectorias es bueno considerar el ingreso total. El ingreso viene en tramos, lo que se hizo fue poner un punto medio como imputación del ingreso para cada alumno. Luego aplicando análisis factorial exploratorio se obtiene un índice que representa el NSE, da un solo índice dado que se retiene un solo factor.
+
+Ahora también el presente NSE se basó  en clasificación por NSE que hace la Agencia de la calidad en base a los cuestionarios SIMCE, (que ocupa prácticamente las mismas variables que te comenté antes). Como se verá, no se incorporó el IVE-SINAE, sino que se tomó en cuenta el SIMCE que es por estudiante, eliminando así la necesidad de imputar 'cero' como valor del IVE a los particulares pagados, ya que no todos los colegios que tienen el IVE-SINAE estimado.
+
+## 3.1 Composición del NSE
+
+El propósito de la construcción de un NSE diferenciado de los grupos socioeconómicos propuestos por la Agencia de la Calidad, así como también del índice de vulnerabilidad (IVE). Es contar con una herramienta que permita observar una variable continua, que permita comparar más de una observación en distintas distribuciones. 
+
+Es importante señalar que el NSE propuesto en esta sección tiene limitaciones y se basa únicamente en valores administrativos, que el SIMCE ha recolectado desde el año 2004 al 2017. Por tanto, las variables consideradas corresponden a:
+
+1. Nivel educacional de la madre.
+2. Nivel educacional del padre.
+3. Ingreso económico total mensual en el hogar.
+
+
+## 3.2 Organización del contenido {.tabset}
+
+La tabla de salida del NSE, serán el producto de la ejecución del código que especifica en la sección del "Script". De igual modo, se señalarán cuáles fueron las tablas de entrada y de salida
+
+
+### Script {#script}
+
+Para el cálculo del NSE, se utilizará el script denominado "NSE_final.R"  y se encuentra en la siguiente ubicación:
+
+[NSE_final.R](https://drive.google.com/file/d/1qm2qhw7cIjYBjHvYmZNIkPcU0g8olRhY/view?usp=sharing)
+
+
+1) Abrir librerías: En primer lugar, es necesario instalar solo una librería, que se utiliza para abrir los archivos csv creados previamente.
+
+```{r eval = FALSE}
+#Parametros
+rm(list=ls())
+setwd("C:/FONDEF/SIMCE")
+
+#librerias
+
+library(readr)
+
+```
+
+2) Abrir Ingreso: En primer lugar, se abrirá el ingreso. La conformación del archivo "obs_val_ingrso.csv" requiere de pasos previos, que se detallan en el [Anexo| NSE: obs_val_ingrso](anexos.html#nseingreso)
+
+```{r eval = FALSE}
+obs_val_ingreso <- read_delim("obs_val_ingrso.csv", 
+                              ";", escape_double = FALSE, 
+                              col_types = cols_only(MRun = col_guess(),
+                                                    MRunValido = col_guess(), 
+                                                    ingreso = col_guess()), 
+                              locale = locale(decimal_mark = ","), 
+                              trim_ws = TRUE)
+```
+
+3) Nivel educacional del padre: La conformación del archivo "obs_val_padre.csv", al igual que el anterior requiere de pasos previos, que se detallan en el [Anexo| NSE: obs_val_padre](anexos.html#nsepadre)
+
+```{r eval = FALSE}
+
+
+
+obs_val_padre <- read_delim("obs_val_padre.csv", 
+                              ";", escape_double = FALSE, 
+                              col_types = cols_only(MRun = col_guess(),
+                                                    MRunValido = col_guess(), 
+                                                    ens_padre = col_guess()), 
+                              locale = locale(decimal_mark = ","), 
+                              trim_ws = TRUE)
+
+```
+
+3) Nivel educacional de la madre: La conformación del archivo "obs_val_madre.csv", se detallan en el [Anexo| NSE: obs_val_madre](anexos.html#nsemadre)
+
+```{r eval = FALSE}
+obs_val_padre$ens_padre[obs_val_padre$ens_padre >= 21] <- 0
+
+obs_val_madre <- read_delim("obs_val_madre.csv", 
+                              ";", escape_double = FALSE, 
+                              col_types = cols_only(MRun = col_guess(),
+                                                    MRunValido = col_guess(), 
+                                                    ens_madre = col_guess()), 
+                              locale = locale(decimal_mark = ","), 
+                              trim_ws = TRUE)
+
+# Se eliminan los valores superiores a 21.
+summary(obs_val_madre)
+
+obs_val_madre$ens_madre[obs_val_madre$ens_madre >= 21] <- 0
+
+```
+
+3) Tratamiento de repetidos: 
+
+Se revisa la existencia de casos repetidos, y en cada uno de los casos y debido a que no representan un porcentaje mayoritario del total, se decide descartar del proceso, quedandose solo con las obvservaciones que son menores o iguales a 1.
+
+Este paso se realiza cada vez que se juntan las tablas de ingreso, nivel socioeconómico del padre y de la madre.
+
+```{r eval = FALSE}
+
+#REpetidos
+
+ingreso_sinR<-aggregate(obs_val_ingreso$MRun, obs_val_ingreso, length)
+padre_sinR<-aggregate(obs_val_padre$MRun, obs_val_padre, length)
+madre_sinR<-aggregate(obs_val_madre$MRun, obs_val_madre, length)
+
+ingreso_SR <- subset(ingreso_sinR, x <= 1)
+padre_SR <- subset(padre_sinR, x <= 1)
+madre_SR <- subset(madre_sinR, x <= 1)
+
+# Juntar Ingreso y nivel de estudio de la madre
+NSE1 <- merge (x= ingreso_SR,
+              y= madre_SR,
+              by.x = "MRun",
+              by.y = "MRun",
+              all.x = TRUE)
+
+Repetidos<-aggregate(NSE1$MRun, NSE1, length)
+NSE1 <- subset(Repetidos, x <= 1)
+
+# Juntar NSE1 y nivel de estudio del padre
+
+NSE2 <- merge (x= NSE1,
+               y= padre_SR,
+               by.x = "MRun",
+               by.y = "MRun",
+               all.x = TRUE)
+
+Repetidos<-aggregate(NSE2$MRun, NSE2, length)
+NSE2<- subset(Repetidos, x <= 1)
+
+# Eliminar las variables que no serán utilizadas
+
+names ( NSE2)
+NSE2$MRunValido <- NULL
+NSE2$MRunValido.x <- NULL
+NSE2$MRunValido.y <- NULL
+NSE2$x.x <- NULL
+NSE2$x.x.1 <- NULL
+NSE2$x.y <- NULL
+NSE2$x.y.1 <- NULL
+NSE2$x <- NULL
+
+```
+
+3) Reescalar variables y guardar: 
+
+Se reescalaron de 0 a 1, cada una de las variables que quedaron como columnas en la tabla final y promediaron en NSE2, para que quedara como una columna final:
+
+ - Ingreso
+ - Nivel de Enseñanza de la madre
+ - Nivel de Enseñanza del padre
+
+
+```{r eval = FALSE}
+#Reescalar
+
+
+library(scales)
+NSE2$Esc_Ingreso <-rescale(NSE2$ingreso)
+NSE2$Esc_ens_madre <-rescale(NSE2$ens_madre)
+NSE2$Esc_ens_padre <-rescale(NSE2$ens_padre)
+
+names(NSE2)
+
+NSE2$NSE = rowMeans (NSE2[ , 5:7])
+head (NSE2)
+
+NSE2$NSE <- ifelse (NSE2$Esc_Ingreso == 0 & 
+                      NSE2$Esc_ens_madre == 0 & 
+                      NSE2$Esc_ens_padre == 0, "NA", NSE2$NSE)
+
+
+names(NSE2)
+
+setwd("C:/FONDEF/SIMCE")
+write.csv2(NSE2, file = " NSE2.csv", row.names = FALSE)
+saveRDS(NSE2, "NSE.rds")
+
+
+```
+
+### Tablas de Origen
+
+
+1. [Nivel educacional de la madre](https://drive.google.com/file/d/1IUwrIv17Ya5K_AdOGvrT1YYd_NFAGYcC/view?usp=sharing)
+2. [Nivel educacional del padre](https://drive.google.com/file/d/1FUSchhfyWJl_1coK996ql5fKMYqKgnjX/view?usp=sharing)
+3. [Ingreso económico total mensual en el hogar](https://drive.google.com/file/d/1FUSchhfyWJl_1coK996ql5fKMYqKgnjX/view?usp=sharing)
+
+### Tablas de salida
+
+
+1. [Nivel Socioeconómico](https://drive.google.com/file/d/1WoPe_VB83kxGtHWRNNVpJvtaKuY3TAUo/view?usp=sharing)

@@ -1,0 +1,44 @@
+---
+title: "Métricas"
+author: "César Puebla y Rafaella Monsalve"
+date: "03-07-2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 5
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+      
+#Nivel 1
+##Nivel 2
+###Nivel 3
+---
+
+
+
+# 3.1 Métricas | Reporte de Stock y Flujos
+
+Las métricas, es el resultado de un cálculo que se desarrolla en base a la "Planilla de Stock y Flujos". En esta planilla se encuentra la asignación de los valores del estado de los estudiantes (stock) y su transcurso (flujo) en los años para los cuales hay datos de matrícula 2004 - 2018. Siendo importante
+señalar que este rango de años de matrícula fue determinado por los requisitos y características propias del Proyecto Fondef IT170006, y se puede incrementar de acuerdo al requerimiento de nuevos objetivos o finalidad que puedan surgir del mismo.
+
+
+## 3.1 Tabla de Observaciones
+
+
+
+
+
+# 4.1 
+
+hello world
+\newpage
+
+```{r, echo=FALSE}
+1+1
+```
+\pagebreak
+
+```{r, echo=FALSE}
+plot(1:10)
+```

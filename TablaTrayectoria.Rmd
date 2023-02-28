@@ -1,0 +1,62 @@
+---
+title: "Tabla de Trayectorias"
+author: "César Puebla ; Rafaella Monsalve"
+date: "10-07-2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 5
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+      
+#Nivel 1
+##Nivel 2
+###Nivel 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# 4. Trayectorias
+
+La tabla de trayectorias se construye con la finalidad de facilitar el cálculo de métricas e indicadores, ya que es la fuente principal de los atributos de la tabla de Stock y Flujos, como así también de la tabla de Observaciones. 
+
+Es importante señalar que esta tabla de trayectorias, corresponde al diseño desarrollado durante el año 2020. A partir de información de estudiantes matriculados entre los años 2004 y 2018 en establecimientos educacionales pertenecientes al Sistema de Educación de Chile.
+
+
+## 4.1 Composición de la tabla de trayectorias
+
+Respecto a la recolección y tal como ha sido señalado en el presente informe, para indagar tanto en las trayectorias educativas, como también para calcular los indicadores que permiten identificar la situación actual de desescolarización en el Sistema Educativo chileno, se requiere información de diferentes fuentes distribuidas en diferentes años, descritas a continuación:
+
+Fuente | 	Longitud	 | Origen	|
+-------|-------------|--------|
+Matrículas	|2004 - 2018	|MINEDUC	|
+Rendimiento	| 2004 - 2018	| MINEDUC |
+
+Es importante señalar que la tabla de trayectorias, corresponde al resultado de una serie de pasos que compara permanentemente la tabla de matrículas con la de rendimiento, de tal forma que sean coherentes en la información que entregan.
+
+Entre las limitaciones que hay que tener en cuenta, es que esta tabla de trayectorias y por tanto también la de observaciones, requiere de mayor validación. Es decir, a medida que se han visto los diversos resultados que tiene una versión más actualizada que la anterior, se encuentran detalles que interpelan directamente al código. 
+
+
+## 4.2 Organización del contenido {.tabset}
+
+La tabla de salida de la tabla de trayectorias, será el producto de la ejecución del código que especifica en la sección del "Script".
+
+
+### Script {#script}
+
+En este caso se utilizará el Script "BASE_TED.R"  y se encuentra en la siguiente ubicación:
+
+[BASE_TED.R](https://drive.google.com/file/d/1qWwZ78rs_PdMbyupeMPMdXz0bt8hVN7X/view?usp=sharing)
+
+
+Debido a que corresponde a una gran cantidad de pasos, se prefirió expresarlo en el [Anexo | Tabla de trayectorias](anexos.html#trayectorias)
+
+
+### Tablas de salida
+
+
+1. [Base trayectorias](https://drive.google.com/file/d/1X2l_NBxlzTC9HPN36og5v6NJKJZMnIX2/view?usp=sharing)
