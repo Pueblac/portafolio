@@ -1,2 +1,2 @@
-# FondefIT170006.github.io
-Repositorio para segunda entrega FondefIT170006
+# Portafolio - César Puebla R.
+En este portafolio se incorporan los trabajos realizado en los proyectos anteriores.
