@@ -1,6 +1,6 @@
 ---
 title: "Procesamiento de datos en Rstudio"
-author: "César Puebla y Rafaella Monsalve"
+author: "César Puebla R."
 date: "03-07-2020"
 output: 
   html_document:

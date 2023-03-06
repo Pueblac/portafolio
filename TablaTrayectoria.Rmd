@@ -1,6 +1,6 @@
 ---
 title: "Tabla de Trayectorias"
-author: "César Puebla ; Rafaella Monsalve"
+author: "César Puebla R."
 date: "10-07-2020"
 output: 
   html_document:

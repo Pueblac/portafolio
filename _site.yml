@@ -1,11 +1,11 @@
-name: "FondefIT170006"
+name: "Portafolio"
 output_dir: "."
 navbar:
-  title: "Documentación"
+  title: "Portafolio"
   left:
-    - text: "Introducción"
+    - text: "Presentación"
       href: about.html
-    - text: "Proceso en Rstudio"
+    - text: "Procesos en Rstudio"
       href: procesamiento.html
     - text: "Métricas"
       href: index.html
