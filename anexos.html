@@ -14,12 +14,22 @@
 
 <title>Anexos</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -27,12 +37,16 @@
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
-<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -45,32 +59,8 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
+
 
 
 
@@ -80,10 +70,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -100,40 +86,16 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -161,7 +123,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -173,7 +135,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -183,11 +145,28 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.parent().addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -199,13 +178,12 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -213,16 +191,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -331,7 +302,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -345,20 +316,20 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Documentación</a>
+      <a class="navbar-brand" href="index.html">Portafolio</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">Introducción</a>
+  <a href="about.html">Presentación</a>
 </li>
 <li>
-  <a href="procesamiento.html">Proceso en Rstudio</a>
+  <a href="procesamiento.html">Procesos en Rstudio</a>
 </li>
 <li>
   <a href="index.html">Métricas</a>
@@ -383,7 +354,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -396,13 +367,19 @@ div.tocify {
 
 <div id="stockyflujos" class="section level1">
 <h1>Anexos | Stock y Flujos</h1>
-<p>En esta sección solo explicaremos la serie de pasos sucesivos que se ejecutan en cada uno de los scripts.</p>
+<p>En esta sección solo explicaremos la serie de pasos sucesivos que se
+ejecutan en cada uno de los scripts.</p>
 <div id="primario" class="section level2">
 <h2>1. Script Primario</h2>
-<p>Es el código que ejecuta todos los scripts necesarios para llegar a las tablas de salida, si bien se encuentra resumido en el punto <a href="index.html#script">2.2 Organización del Contenido | Script</a>, el código completo se presentará a continuación.</p>
+<p>Es el código que ejecuta todos los scripts necesarios para llegar a
+las tablas de salida, si bien se encuentra resumido en el punto <a
+href="index.html#script">2.2 Organización del Contenido | Script</a>, el
+código completo se presentará a continuación.</p>
 <div id="pri_packages" class="section level3">
 <h3>1.1 Instalar paquetes</h3>
-<p>Es necesario instalar los siguientes paquetes que contienen las librerías, en caso de estar instaladas simplemente es necesario omitir este paso:</p>
+<p>Es necesario instalar los siguientes paquetes que contienen las
+librerías, en caso de estar instaladas simplemente es necesario omitir
+este paso:</p>
 <pre class="r"><code>rm(list = ls())
 ###Instalar LIBRERIAS
 install.packages(&quot;tidyverse&quot;)
@@ -414,8 +391,16 @@ install.packages(&quot;haven&quot;)</code></pre>
 </div>
 <div id="pri_library" class="section level3">
 <h3>1.2 Llamar librerías</h3>
-<p>Si deseas ejecutar todos los script, no se debe hacer al mismo tiempo, ya que el compilador lee toda la instrucción y verifica la existencia de carpetas que se crean en el paso <a href="#pri_comunas">1.2 Guardar Comunas</a>, como no se encontrarían hechas por defecto, surgiría un error indicando que las carpetas no existen. Por tanto, es necesario terminar con ese ítem y luego es es posible ejecutar todas las fuentes.</p>
-<p>Notarán que posteriormente las librerías se repiten permanentemente y si bien es necesario solo abrirlas una vez, es posible también querer ejecutar solo</p>
+<p>Si deseas ejecutar todos los script, no se debe hacer al mismo
+tiempo, ya que el compilador lee toda la instrucción y verifica la
+existencia de carpetas que se crean en el paso <a
+href="#pri_comunas">1.2 Guardar Comunas</a>, como no se encontrarían
+hechas por defecto, surgiría un error indicando que las carpetas no
+existen. Por tanto, es necesario terminar con ese ítem y luego es es
+posible ejecutar todas las fuentes.</p>
+<p>Notarán que posteriormente las librerías se repiten permanentemente y
+si bien es necesario solo abrirlas una vez, es posible también querer
+ejecutar solo</p>
 <pre class="r"><code>rm(list = ls())
 ###LIBRERIAS
 library(tidyverse)
@@ -431,7 +416,8 @@ source(&quot;1.1DataFrame.R&quot;)</code></pre>
 </div>
 <div id="pri_comunas" class="section level3">
 <h3>1.3 Guardar comunas</h3>
-<p>Este script se encuentra enfocado a conformar las carpetas de cada comuna de Chile.</p>
+<p>Este script se encuentra enfocado a conformar las carpetas de cada
+comuna de Chile.</p>
 <pre class="r"><code>rm(list = ls())
 ###LIBRERIAS
 library(tidyverse)
@@ -447,7 +433,10 @@ source(&quot;1.2GuardarComunas.R&quot;)</code></pre>
 </div>
 <div id="pri_syfcomunas" class="section level3">
 <h3>1.4 Stock y Flujos por comuna</h3>
-<p>Para cada una de las comunas se crearán los stock y flujo. Para disminuir la carga de trabajo sobre el servidor y verificar el contenido de las tablas de salida, se dividió el conjunto e 346 comunas en 7 subconjuntos ordenados alfabéticamente:</p>
+<p>Para cada una de las comunas se crearán los stock y flujo. Para
+disminuir la carga de trabajo sobre el servidor y verificar el contenido
+de las tablas de salida, se dividió el conjunto e 346 comunas en 7
+subconjuntos ordenados alfabéticamente:</p>
 <table>
 <thead>
 <tr class="header">
@@ -509,7 +498,10 @@ source(&quot;301_346.R&quot;)</code></pre>
 </div>
 <div id="pri_icomunas" class="section level3">
 <h3>1.5 Incidencia por comuna</h3>
-<p>Para cada una de las comunas se creará la tabla de incidencia. Para disminuir la carga de trabajo sobre el servidor y verificar el contenido de las tablas de salida, se dividió el conjunto e 346 comunas en 7 subconjuntos ordenados alfabéticamente:</p>
+<p>Para cada una de las comunas se creará la tabla de incidencia. Para
+disminuir la carga de trabajo sobre el servidor y verificar el contenido
+de las tablas de salida, se dividió el conjunto e 346 comunas en 7
+subconjuntos ordenados alfabéticamente:</p>
 <table>
 <thead>
 <tr class="header">
@@ -569,7 +561,10 @@ source(&quot;301_346_Incidencia.R&quot;)</code></pre>
 </div>
 <div id="pri_pcomunas" class="section level3">
 <h3>1.6 Prevalencia por comuna</h3>
-<p>Para cada una de las comunas se creará la tabla de prevalencia. Para disminuir la carga de trabajo sobre el servidor y verificar el contenido de las tablas de salida, se dividió el conjunto e 346 comunas en 7 subconjuntos ordenados alfabéticamente:</p>
+<p>Para cada una de las comunas se creará la tabla de prevalencia. Para
+disminuir la carga de trabajo sobre el servidor y verificar el contenido
+de las tablas de salida, se dividió el conjunto e 346 comunas en 7
+subconjuntos ordenados alfabéticamente:</p>
 <table>
 <thead>
 <tr class="header">
@@ -629,8 +624,10 @@ source(&quot;301_346_Prevalencia.R&quot;)</code></pre>
 </div>
 <div id="pri_rbind" class="section level3">
 <h3>1.7 Unir resultados</h3>
-<p>Mediante el comando “Rbind” se unen tanto las tablas de Stock y Flujos, como las de Incidencia y Prevalencia.</p>
-<pre class="r"><code>#Rbind ------------------------------------------------------------
+<p>Mediante el comando “Rbind” se unen tanto las tablas de Stock y
+Flujos, como las de Incidencia y Prevalencia.</p>
+<pre class="r"><code>#Rbind ----------------------------------------(list = ls())
+###LIBRERIAS--------------------
 # PARAMETROS
 rm(list = ls())
 ###LIBRERIAS
@@ -660,7 +657,11 @@ source(&quot;1.6JuntarPrevalencia.R&quot;)</code></pre>
 </div>
 <div id="pri_rename" class="section level3">
 <h3>1.8 Renombrar y Guardar</h3>
-<p>Los resultados expresados en las tablas de salida, son guardados en formato .rds, así como .csv. En tanto, los nombres de las variables deben ser renombrados con la finalidad de que no queden con la codificación inicial, y poder ver algo más intuitivo o simple de decifrar.</p>
+<p>Los resultados expresados en las tablas de salida, son guardados en
+formato .rds, así como .csv. En tanto, los nombres de las variables
+deben ser renombrados con la finalidad de que no queden con la
+codificación inicial, y poder ver algo más intuitivo o simple de
+decifrar.</p>
 <pre class="r"><code># PARAMETROS
 rm(list = ls())
 ###LIBRERIAS
@@ -679,11 +680,19 @@ source(&quot;1.7RenombrarYGuardar.R&quot;)</code></pre>
 <h2>2 Script Secundarios</h2>
 <div id="dataframe" class="section level3">
 <h3>2.1 DataFrame</h3>
-<p>Este Script, fue creado debido a la magnitud de la tabla original que en RDS se encuentra cargada en la siguiente dirección: <a href="https://drive.google.com/file/d/1X21Q6pubCC4AZ-We0dkcjOlhP51XHA2z/view?usp=sharing">TH_Stock_y_Flujos.rds</a> y en CSV, en <a href="https://drive.google.com/file/d/17ZZyzRoZweuncpr4O8_9vnNA-zRgmE2m/view?usp=sharing">TH_Stock_y_Flujos.csv</a></p>
-<p>Esta tabla se compone de alrededor de 50 millones de observaciones, sin embargo en el procesamiento se descompone por año, tal como se indica en el <a href="#dataframe">Anexo | 2.3.2 DataFrame.R</a></p>
+<p>Este Script, fue creado debido a la magnitud de la tabla original que
+en RDS se encuentra cargada en la siguiente dirección: <a
+href="https://drive.google.com/file/d/1X21Q6pubCC4AZ-We0dkcjOlhP51XHA2z/view?usp=sharing">TH_Stock_y_Flujos.rds</a>
+y en CSV, en <a
+href="https://drive.google.com/file/d/17ZZyzRoZweuncpr4O8_9vnNA-zRgmE2m/view?usp=sharing">TH_Stock_y_Flujos.csv</a></p>
+<p>Esta tabla se compone de alrededor de 50 millones de observaciones,
+sin embargo en el procesamiento se descompone por año, tal como se
+indica en el <a href="#dataframe">Anexo | 2.3.2 DataFrame.R</a></p>
 <div id="df_packages" class="section level4">
 <h4>2.1.1 Instalar paquetes</h4>
-<p>Es necesario instalar los siguientes paquetes que contienen las librerías, en caso de estar instaladas simplemente es necesario omitir este paso:</p>
+<p>Es necesario instalar los siguientes paquetes que contienen las
+librerías, en caso de estar instaladas simplemente es necesario omitir
+este paso:</p>
 <pre class="r"><code>rm(list = ls())
 ###Instalar LIBRERIAS
 install.packages(&quot;tidyverse&quot;)
@@ -695,7 +704,10 @@ install.packages(&quot;haven&quot;)</code></pre>
 </div>
 <div id="df_library" class="section level4">
 <h4>2.1.2 Llamar librerías</h4>
-<p>Al igual que la mayor parte de los Script del documento, comienza llamando las librerías, lo cual no es necesario repetirlo, sin embargo, en caso de existir un error o reiniciar R, es posible ejecutarlo varias veces sin mayores consecuencias.</p>
+<p>Al igual que la mayor parte de los Script del documento, comienza
+llamando las librerías, lo cual no es necesario repetirlo, sin embargo,
+en caso de existir un error o reiniciar R, es posible ejecutarlo varias
+veces sin mayores consecuencias.</p>
 <pre class="r"><code># EXTRAER TABLAS DE Trayectorias A CSV
 rm(list = ls())
 ###LIBRERIAS
@@ -708,8 +720,11 @@ library(haven)</code></pre>
 </div>
 <div id="df_mat" class="section level4">
 <h4>2.1.3 Matrícula Privada</h4>
-<p>Los datos se extraerán cuatro fuentes fuentes: matrículas privadas; tablas de Stock y Flujos; tablas de consistencia, tabla que indica los Servicios Locales de Educación (SLE).</p>
-<p>En este caso vamos a abrir las tablas de matrícula privada, desde el año 2004 al 2018.</p>
+<p>Los datos se extraerán cuatro fuentes fuentes: matrículas privadas;
+tablas de Stock y Flujos; tablas de consistencia, tabla que indica los
+Servicios Locales de Educación (SLE).</p>
+<p>En este caso vamos a abrir las tablas de matrícula privada, desde el
+año 2004 al 2018.</p>
 <pre class="r"><code>#### Parámetros para matricula privada ####
 setwd(&quot;C:/FONDEF/Tabla de Trayectorias/Matricula_privada/&quot;)
 mat_priv2004 &lt;- readRDS(&quot;mat_priv2004.rds&quot;)
@@ -751,17 +766,30 @@ obs_stock2018&lt;-  readRDS( &quot;obs_stock2018.rds&quot;)</code></pre>
 </div>
 <div id="df_consistente" class="section level4">
 <h4>2.1.5 Mrun Consistentes</h4>
-<p>Se abre igualmente la tabla de consistencia, que es una serie de MRUN construida en base a datos del Ministerio de Educación, Agencia de la Calidad, Educación Superior, etc. Es importante diferenciar que la tabla de MRUN Consistentes es diferente de la usada para las Observaciones y trayectorias elaboradas el año 2020.</p>
-<p>La base de “MRUN consistentes” utilizada en el Fondef IT170006, es la misma utilizada en todo el proceso y lógica del Fondef y diferente del Proyecto de Base certificada que surge a partir de los diferentes problemas surgidos por la falta de coherencia entre los datos administratios de matrícula y rendimiento del MINEDUC.</p>
-<p>Otro punto importante de señalar, es que la tabla de “MRUN consistentes” no se encuentra diferenciada por año.</p>
-<p>En fin, la tabla de MRUN consistentes indica cuales son los MRUN con esta característica al agregarle un numerador “1”, que posteriormente permita diferenciar los MRUN consistentes (“1”) de los que no lo son (“0”):</p>
+<p>Se abre igualmente la tabla de consistencia, que es una serie de MRUN
+construida en base a datos del Ministerio de Educación, Agencia de la
+Calidad, Educación Superior, etc. Es importante diferenciar que la tabla
+de MRUN Consistentes es diferente de la usada para las Observaciones y
+trayectorias elaboradas el año 2020.</p>
+<p>La base de “MRUN consistentes” utilizada en el Fondef IT170006, es la
+misma utilizada en todo el proceso y lógica del Fondef y diferente del
+Proyecto de Base certificada que surge a partir de los diferentes
+problemas surgidos por la falta de coherencia entre los datos
+administratios de matrícula y rendimiento del MINEDUC.</p>
+<p>Otro punto importante de señalar, es que la tabla de “MRUN
+consistentes” no se encuentra diferenciada por año.</p>
+<p>En fin, la tabla de MRUN consistentes indica cuales son los MRUN con
+esta característica al agregarle un numerador “1”, que posteriormente
+permita diferenciar los MRUN consistentes (“1”) de los que no lo son
+(“0”):</p>
 <pre class="r"><code>MRUN_CON &lt;- readRDS(&quot;C:/FONDEF/Tabla de Trayectorias/MRUN_CON.rds&quot;)
 
 #### Agregar Numerador 
 
 MRUN_CON$MRunValido&lt;- 1</code></pre>
 <ol start="5" style="list-style-type: decimal">
-<li>Luego, se combinarán las tablas de “STock y FLujos” con la de MRUN Consistentes.</li>
+<li>Luego, se combinarán las tablas de “STock y FLujos” con la de MRUN
+Consistentes.</li>
 </ol>
 <pre class="r"><code>#### Merge Mrun Validos
 
@@ -783,15 +811,22 @@ obs_stock2018 &lt;- merge(x = obs_stock2018, y = MRUN_CON, by.x= &quot;MRun&quot
 </div>
 <div id="df_consistente" class="section level4">
 <h4>2.1.6 Incorporar SLE</h4>
-<p>De forma previa a combinar las tablas que dan como resultado del punto anterior, con la matrícula privada, seleccionamos las variables de la matrícula privada, que vamos a utilizar por cada uno de los años:</p>
+<p>De forma previa a combinar las tablas que dan como resultado del
+punto anterior, con la matrícula privada, seleccionamos las variables de
+la matrícula privada, que vamos a utilizar por cada uno de los años:</p>
 <ul>
 <li>mrun: MRUN</li>
 <li>rbd: Identificador del Establecimiento Educacional</li>
-<li>cod_com_rbd: Identificador del código de la comuna del Establecimiento Educacional.</li>
-<li>cod_depe: Código de la dependencia del Establecimiento Educacional.</li>
-<li>cod_depe2: Segundo código de la dependencia de cada Establecimiento Educacional.</li>
-<li>rural_rbd: Indica si el Establecimiento Educacional es considerado Rural o No.</li>
-<li>cod_ense: Indica el código de Enseñanza, correspondiente a cada MRUN.</li>
+<li>cod_com_rbd: Identificador del código de la comuna del
+Establecimiento Educacional.</li>
+<li>cod_depe: Código de la dependencia del Establecimiento
+Educacional.</li>
+<li>cod_depe2: Segundo código de la dependencia de cada Establecimiento
+Educacional.</li>
+<li>rural_rbd: Indica si el Establecimiento Educacional es considerado
+Rural o No.</li>
+<li>cod_ense: Indica el código de Enseñanza, correspondiente a cada
+MRUN.</li>
 </ul>
 <pre class="r"><code>#### Merge Mrun Validos
 
@@ -828,7 +863,9 @@ obs_stock2018 &lt;- merge(x = obs_stock2018, y = MRUN_CON, by.x= &quot;MRun&quot
                                               &quot;rural_rbd&quot;,&quot;cod_ense&quot; ))
   mat_2018 &lt;- subset(mat_priv2018, select = c(&quot;mrun&quot;, &quot;rbd&quot;, &quot;cod_com_rbd&quot;, &quot;cod_depe&quot;, &quot;cod_depe2&quot;,
                                               &quot;rural_rbd&quot;,&quot;cod_ense&quot; ))</code></pre>
-<p>Una vez seleccionadas las variables que vamos a combinar de las tablas de matrícula privada, las combinamos con las las tablas de stock y flujos.</p>
+<p>Una vez seleccionadas las variables que vamos a combinar de las
+tablas de matrícula privada, las combinamos con las las tablas de stock
+y flujos.</p>
 <pre class="r"><code>#### Merge Mrun Validos
 
 #### Incorporar Comuna ####
@@ -850,7 +887,8 @@ obs_stock2015 &lt;- merge(x = obs_stock2015, y = mat_2004, by.x= &quot;MRun&quot
 obs_stock2016 &lt;- merge(x = obs_stock2016, y = mat_2004, by.x= &quot;MRun&quot;, by.y= &quot;mrun&quot;, all.x = TRUE)
 obs_stock2017 &lt;- merge(x = obs_stock2017, y = mat_2004, by.x= &quot;MRun&quot;, by.y= &quot;mrun&quot;, all.x = TRUE)
 obs_stock2018 &lt;- merge(x = obs_stock2018, y = mat_2004, by.x= &quot;MRun&quot;, by.y= &quot;mrun&quot;, all.x = TRUE)</code></pre>
-<p>Se combina el resultado anterior con la tabla que contiene los siguientes:</p>
+<p>Se combina el resultado anterior con la tabla que contiene los
+siguientes:</p>
 <ul>
 <li>“COD_COM” : Código de comuna</li>
 <li>“NOM_REGION” : Código de la región</li>
@@ -888,8 +926,13 @@ obs_stock2018 &lt;- merge(x = obs_stock2018, y = COD_SLE_COM, by.x= &quot;cod_co
 </div>
 <div id="df_idstock" class="section level4">
 <h4>2.1.7 Identificar Stock</h4>
-<p>Posteriormente se tienen que identificar cada uno de los stock por cada uno de los años. O crear una variable dummy de los identificadores de Stock.</p>
-<p>Es importante señalar que cada una de las definiciones de Stock se encuentran detalladas en dicha sección del <a href="index.hatml#defstock">2.2 Organización del Contenido | Definición de Stock</a></p>
+<p>Posteriormente se tienen que identificar cada uno de los stock por
+cada uno de los años. O crear una variable dummy de los identificadores
+de Stock.</p>
+<p>Es importante señalar que cada una de las definiciones de Stock se
+encuentran detalladas en dicha sección del <a
+href="index.hatml#defstock">2.2 Organización del Contenido | Definición
+de Stock</a></p>
 <pre class="r"><code>#### numerar todos los valores de obs_stock$stockID ####
 #&quot;Rt&quot; = matricula
 
@@ -1066,8 +1109,13 @@ obs_stock2018$&quot;At_Xt-1&quot;[obs_stock2018$StockID==&quot;At_Xt-1&quot;] &l
 </div>
 <div id="df_idflujo" class="section level4">
 <h4>2.1.8 Identificar Flujo</h4>
-<p>Posteriormente se tienen que identificar cada uno de los flujos por cada uno de los años. O crear una variable dummy de los identificadores de flujo.</p>
-<p>Es importante señalar que cada una de las definiciones de Flujo se encuentran detalladas en dicha sección del <a href="index.hatml#defflujo">2.2 Organización del Contenido | Definición de Flujo</a></p>
+<p>Posteriormente se tienen que identificar cada uno de los flujos por
+cada uno de los años. O crear una variable dummy de los identificadores
+de flujo.</p>
+<p>Es importante señalar que cada una de las definiciones de Flujo se
+encuentran detalladas en dicha sección del <a
+href="index.hatml#defflujo">2.2 Organización del Contenido | Definición
+de Flujo</a></p>
 <pre class="r"><code>#### numerar todos los valores de obs_stock$FlujoID ####
 
 #$&quot;1&quot;
@@ -1568,7 +1616,9 @@ obs_stock2018$&quot;254&quot;[obs_stock2018$FlujoID==&quot;254&quot;] &lt;- 1</c
 </div>
 <div id="guardarcomunas" class="section level3">
 <h3>2.2 Guardar Comunas</h3>
-<p>Este Script cumple la función de crear las carpetas en que serán arrojado los datos de Stock y Flujos, así como también seleccionar los Stock y los Flujos por comuna.</p>
+<p>Este Script cumple la función de crear las carpetas en que serán
+arrojado los datos de Stock y Flujos, así como también seleccionar los
+Stock y los Flujos por comuna.</p>
 <div id="gc_library" class="section level4">
 <h4>2.2.1 Llamar librerías</h4>
 <p>Comienza llamando las librerías:</p>
@@ -1585,7 +1635,8 @@ library(haven)</code></pre>
 </div>
 <div id="gc_stock" class="section level4">
 <h4>2.2.2 Abrir Stock y Flujos</h4>
-<p>En este caso se deben abrirlas tablas de Stock y Flujos del año 2004 al 2018, que ya tienen incorporados los atributos territoriales.</p>
+<p>En este caso se deben abrirlas tablas de Stock y Flujos del año 2004
+al 2018, que ya tienen incorporados los atributos territoriales.</p>
 <pre class="r"><code># Reg2004 -----------------------------------------------------------------
 
 
@@ -1961,7 +2012,8 @@ dir.create(&#39;./ZAPALLA&#39;)</code></pre>
 </div>
 <div id="gc_carpetas" class="section level4">
 <h4>2.2.4 Guardar comunas</h4>
-<p>Se seleccionan las comunas, y se guarda cada dataset en las carpetas correspondientes.</p>
+<p>Se seleccionan las comunas, y se guarda cada dataset en las carpetas
+correspondientes.</p>
 <pre class="r"><code># Contenido2004 --------------------------------------------------------
 
 
@@ -22829,8 +22881,14 @@ ZAPALLA2018&lt;-saveRDS(ZAPALLA2018,&#39;ZAPALLA2018.rds&#39;)</code></pre>
 </div>
 <div id="mg" class="section level3">
 <h3>2.3 Métricas generales</h3>
-<p>El primer informe de métricas, es el que corresponde a todo Chile, y representa un paso desde los informes que eran realizados desde SQL a Rstudio, ya que significó investigar la formulación y la lógica detrás de los datos que eran informados en el año 2019, en el “Reporte de Métricas”.</p>
-<p>De este modo, es posible afirmar que este script da el mismo resultado que el reporte de métricas que era desarrollado a través de SQL en el año 2019.</p>
+<p>El primer informe de métricas, es el que corresponde a todo Chile, y
+representa un paso desde los informes que eran realizados desde SQL a
+Rstudio, ya que significó investigar la formulación y la lógica detrás
+de los datos que eran informados en el año 2019, en el “Reporte de
+Métricas”.</p>
+<p>De este modo, es posible afirmar que este script da el mismo
+resultado que el reporte de métricas que era desarrollado a través de
+SQL en el año 2019.</p>
 <div id="mglibrerías" class="section level4">
 <h4>2.3.1 Llamar librerías</h4>
 <pre class="r"><code>rm(list = ls())
@@ -22863,8 +22921,12 @@ obs_stock2018 &lt;- readRDS(&quot;obs_stock2018.rds&quot;)</code></pre>
 </div>
 <div id="mgtabla" class="section level4">
 <h4>2.3.3 Formar tabla</h4>
-<p>Se conforma la tabla que se denomina “df”, con una primera columna denominada "agno, que contiene una fila por año. Para la matrícula completa.</p>
-<p>Es por ello que la segunda columnaque se ingresa es “filtro”, ya que sabemos que adempas de tenere la matrícula competa, también debe tener las métricas por comuna.</p>
+<p>Se conforma la tabla que se denomina “df”, con una primera columna
+denominada “agno, que contiene una fila por año. Para la matrícula
+completa.</p>
+<p>Es por ello que la segunda columnaque se ingresa es “filtro”, ya que
+sabemos que adempas de tenere la matrícula competa, también debe tener
+las métricas por comuna.</p>
 <pre class="r"><code>##### Crear Dataframe donde se encuentren las m?tricas #####
 df &lt;- data.frame(&quot;agno&quot; = c(2004, 2005, 2006, 2007, 2008, 2009, 2010, 
                             2011, 2012, 2013, 2014, 2015, 2016, 2017,
@@ -22873,8 +22935,17 @@ df$Filtro &lt;- &quot;Matrícula Completa&quot;</code></pre>
 </div>
 <div id="mgmaricularegular" class="section level4">
 <h4>2.3.4 Rt| Matrícula Regular</h4>
-<p>La matrícula de la educación regular, es la suma de todos los estudiantes que se encunetran en Rt = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que ingresaron a una enseñanza regular, es al igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘Rt = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, Rt es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>La matrícula de la educación regular, es la suma de todos los
+estudiantes que se encunetran en Rt = “1”, en la tabla “obs_stock”.Por
+cada uno de los años.</p>
+<p>La celda por año con la cantidad de estudiantes que ingresaron a una
+enseñanza regular, es al igual al resultado de una función condicional,
+que indica: “Si en”df”, en la columna “agno” es igual a ‘2004’, entonces
+suma todas las observaciones que indiquen ‘Rt = 1’ del dataframe
+“obs_stock2004”, como se indica en el <a href="#df_idstock">2.1
+DataFrame | 2.1.7 Identificar Stock</a>, Rt es una variable dummy, por
+tanto es una suma de valores “1”, omitiendo los valores NA que puedan
+aparecer.</p>
 <pre class="r"><code>#Rt = Regular en t
 
 df$Rt &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$Rt, na.rm = TRUE),
@@ -22895,8 +22966,19 @@ df$Rt &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$Rt, na.rm = TRUE),
 </div>
 <div id="mgabandonoregular" class="section level4">
 <h4>2.3.5 At_Rt-1</h4>
-<p>Son los estudiantes que en el tiempo “t-1” se encontraba en Enseñanza Regular, y en el tiempo “t” se encuentra en Enseñanza Adulta, entendiendose como abandono de la educación regular, es la suma de todos los estudiantes que se encuentran en At_Rt-1 = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que abandonaron la enseñanza regular, es al igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘At_Rt-1 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, At_Rt-1 es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en el tiempo “t-1” se encontraba en Enseñanza
+Regular, y en el tiempo “t” se encuentra en Enseñanza Adulta,
+entendiendose como abandono de la educación regular, es la suma de todos
+los estudiantes que se encuentran en At_Rt-1 = “1”, en la tabla
+“obs_stock”.Por cada uno de los años.</p>
+<p>La celda por año con la cantidad de estudiantes que abandonaron la
+enseñanza regular, es al igual al resultado de una función condicional,
+que indica: “Si en”df”, en la columna “agno” es igual a ‘2004’, entonces
+suma todas las observaciones que indiquen ‘At_Rt-1 = 1’ del dataframe
+“obs_stock2004”, como se indica en el <a href="#df_idstock">2.1
+DataFrame | 2.1.7 Identificar Stock</a>, At_Rt-1 es una variable dummy,
+por tanto es una suma de valores “1”, omitiendo los valores NA que
+puedan aparecer.</p>
 <pre class="r"><code>#&quot;At_Rt-1&quot; = Adulta en t y Regular en t-1
 df$&quot;At_Rt-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;At_Rt-1&quot;, na.rm = TRUE),
                        (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;At_Rt-1&quot;, na.rm = TRUE),
@@ -22916,8 +22998,17 @@ df$&quot;At_Rt-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;At_R
 </div>
 <div id="mgexcluidosregular" class="section level4">
 <h4>2.3.7 At_At-1</h4>
-<p>La exclusión de la educación regular, es la suma de todos los estudiantes que se encuentran en At_At-1 = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que se exluyeron de la enseñanza regular, siendo igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘At_At-1 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, At_At-1 es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>La exclusión de la educación regular, es la suma de todos los
+estudiantes que se encuentran en At_At-1 = “1”, en la tabla
+“obs_stock”.Por cada uno de los años.</p>
+<p>La celda por año con la cantidad de estudiantes que se exluyeron de
+la enseñanza regular, siendo igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘At_At-1 = 1’
+del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, At_At-1
+es una variable dummy, por tanto es una suma de valores “1”, omitiendo
+los valores NA que puedan aparecer.</p>
 <pre class="r"><code>#&quot;At_At-1&quot; = Adulta en t y Adulta en t-1
 df$&quot;At_At-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;At_At-1&quot;, na.rm = TRUE),
                        (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;At_At-1&quot;, na.rm = TRUE),
@@ -22937,8 +23028,19 @@ df$&quot;At_At-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;At_A
 </div>
 <div id="mgeatxt" class="section level4">
 <h4>2.3.8 At_Xt-1</h4>
-<p>Son los estudiantes que en el tiempo “t-1” se encontraba en Enseñanza Adulta, y en el tiempo “t” se encuentran también en Enseñanza Adulta. Entendiendose como exclusión de la educación regular, siendo la suma de todos los estudiantes que se encuentran en At_Xt-1 = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que se excluyeron de la enseñanza regular, siendo igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘At_Xt-1 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, At_Xt-1 es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en el tiempo “t-1” se encontraba en Enseñanza
+Adulta, y en el tiempo “t” se encuentran también en Enseñanza Adulta.
+Entendiendose como exclusión de la educación regular, siendo la suma de
+todos los estudiantes que se encuentran en At_Xt-1 = “1”, en la tabla
+“obs_stock”.Por cada uno de los años.</p>
+<p>La celda por año con la cantidad de estudiantes que se excluyeron de
+la enseñanza regular, siendo igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘At_Xt-1 = 1’
+del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, At_Xt-1
+es una variable dummy, por tanto es una suma de valores “1”, omitiendo
+los valores NA que puedan aparecer.</p>
 <pre class="r"><code>#&quot;At_Xt-1&quot; = No Matriculado en t y No Matriculado en t-1
 df$&quot;At_Xt-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;At_Xt-1&quot;, na.rm = TRUE),
                        (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;At_Xt-1&quot;, na.rm = TRUE),
@@ -22958,8 +23060,16 @@ df$&quot;At_Xt-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;At_X
 </div>
 <div id="mgfallecidos" class="section level4">
 <h4>2.3.8 Xt_F</h4>
-<p>Los fallecidos, son la suma de todos los estudiantes que se encuentran en Xt_F = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que fallecieron, siendo igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘Xt_F = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, Xt_F es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Los fallecidos, son la suma de todos los estudiantes que se
+encuentran en Xt_F = “1”, en la tabla “obs_stock”.Por cada uno de los
+años.</p>
+<p>La celda por año con la cantidad de estudiantes que fallecieron,
+siendo igual al resultado de una función condicional, que indica: “Si
+en”df”, en la columna “agno” es igual a ‘2004’, entonces suma todas las
+observaciones que indiquen ‘Xt_F = 1’ del dataframe “obs_stock2004”,
+como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7
+Identificar Stock</a>, Xt_F es una variable dummy, por tanto es una suma
+de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>#&quot;Xt_F&quot; = Fallecido en t
 df$Xt_F &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$Xt_F, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$Xt_F, na.rm = TRUE),
@@ -22979,8 +23089,17 @@ df$Xt_F &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$Xt_F, na.rm = TRUE),
 </div>
 <div id="mgfallecidos" class="section level4">
 <h4>2.3.9 Xt_G</h4>
-<p>SOn los estudiantes que no se encuentra matriculados, debido a que está graduado de 4° medio. Siendo la suma de todos los estudiantes que se encuentran en Xt_G = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que fallecieron, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘Xt_G = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, Xt_G es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>SOn los estudiantes que no se encuentra matriculados, debido a que
+está graduado de 4° medio. Siendo la suma de todos los estudiantes que
+se encuentran en Xt_G = “1”, en la tabla “obs_stock”.Por cada uno de los
+años.</p>
+<p>La celda por año con la cantidad de estudiantes que fallecieron, es
+igual al resultado de una función condicional, que indica: “Si en”df”,
+en la columna “agno” es igual a ‘2004’, entonces suma todas las
+observaciones que indiquen ‘Xt_G = 1’ del dataframe “obs_stock2004”,
+como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7
+Identificar Stock</a>, Xt_G es una variable dummy, por tanto es una suma
+de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>#&quot;Xt_G&quot; =No Matriculado en t y Graduado
 df$Xt_G &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$Xt_G, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$Xt_G, na.rm = TRUE),
@@ -23000,8 +23119,17 @@ df$Xt_G &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$Xt_G, na.rm = TRUE),
 </div>
 <div id="mgxtrt" class="section level4">
 <h4>2.3.10 Xt_Rt-1</h4>
-<p>SOn los estudiantes que no están matriculados en “t” y estaban matriculados en educación regular en “t-1”. Siendo la suma de todos los estudiantes que se encuentran en Xt_Rt-1 = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que fallecieron, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘Xt_Rt-1 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, ‘Xt_Rt-1’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>SOn los estudiantes que no están matriculados en “t” y estaban
+matriculados en educación regular en “t-1”. Siendo la suma de todos los
+estudiantes que se encuentran en Xt_Rt-1 = “1”, en la tabla
+“obs_stock”.Por cada uno de los años.</p>
+<p>La celda por año con la cantidad de estudiantes que fallecieron, es
+igual al resultado de una función condicional, que indica: “Si en”df”,
+en la columna “agno” es igual a ‘2004’, entonces suma todas las
+observaciones que indiquen ‘Xt_Rt-1 = 1’ del dataframe “obs_stock2004”,
+como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7
+Identificar Stock</a>, ‘Xt_Rt-1’ es una variable dummy, por tanto es una
+suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>#&quot;Xt_Rt-1&quot; = No Matriculado en t y Regular en t-1
 
 df$&quot;Xt_Rt-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;Xt_Rt-1&quot;, na.rm = TRUE),
@@ -23022,8 +23150,16 @@ df$&quot;Xt_Rt-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;Xt_R
 </div>
 <div id="mgxtat" class="section level4">
 <h4>2.3.11 Xt_At-1</h4>
-<p>SOn los estudiantes no matriculado en “t” y matriculado en enseñanza adulta“t-1”. Siendo la suma de todos los estudiantes que se encuentran en Xt_At-1 = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que fallecieron, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘Xt_At-1 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, ‘Xt_At-1’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>SOn los estudiantes no matriculado en “t” y matriculado en enseñanza
+adulta”t-1”. Siendo la suma de todos los estudiantes que se encuentran
+en Xt_At-1 = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
+<p>La celda por año con la cantidad de estudiantes que fallecieron, es
+igual al resultado de una función condicional, que indica: “Si en”df”,
+en la columna “agno” es igual a ‘2004’, entonces suma todas las
+observaciones que indiquen ‘Xt_At-1 = 1’ del dataframe “obs_stock2004”,
+como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7
+Identificar Stock</a>, ‘Xt_At-1’ es una variable dummy, por tanto es una
+suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code># &quot;Xt_At-1&quot; =   No Matriculado en t y Adulta en t-1
 
 df$&quot;Xt_At-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;Xt_At-1&quot;, na.rm = TRUE),
@@ -23044,8 +23180,16 @@ df$&quot;Xt_At-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;Xt_A
 </div>
 <div id="mgxtxt" class="section level4">
 <h4>2.3.12 Xt_Xt-1</h4>
-<p>Son los estudiantes que no están matriculados en “t” y no matriculado en “t-1”. Siendo la suma de todos los estudiantes que se encuentran en Xt_Xt-1 = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que fallecieron, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘Xt_Xt-1 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, ‘Xt_Xt-1’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que no están matriculados en “t” y no matriculado
+en “t-1”. Siendo la suma de todos los estudiantes que se encuentran en
+Xt_Xt-1 = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
+<p>La celda por año con la cantidad de estudiantes que fallecieron, es
+igual al resultado de una función condicional, que indica: “Si en”df”,
+en la columna “agno” es igual a ‘2004’, entonces suma todas las
+observaciones que indiquen ‘Xt_Xt-1 = 1’ del dataframe “obs_stock2004”,
+como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7
+Identificar Stock</a>, ‘Xt_Xt-1’ es una variable dummy, por tanto es una
+suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>#&quot;Xt_Xt-1&quot; = No Matriculado en t y No Matriculado en t-1
 df$&quot;Xt_Xt-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;Xt_Xt-1&quot;, na.rm = TRUE),
                        (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;Xt_Xt-1&quot;, na.rm = TRUE),
@@ -23065,8 +23209,16 @@ df$&quot;Xt_Xt-1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;Xt_X
 </div>
 <div id="mgxtxa" class="section level4">
 <h4>2.3.13 Xt_XA</h4>
-<p>Son los estudiantes que no se encontraban matriculados en t y nunca antes. Siendo la suma de todos los estudiantes que se encuentran en Xt_XA = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
-<p>La celda por año con la cantidad de estudiantes que fallecieron, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘Xt_XA = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7 Identificar Stock</a>, ‘Xt_XA’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que no se encontraban matriculados en t y nunca
+antes. Siendo la suma de todos los estudiantes que se encuentran en
+Xt_XA = “1”, en la tabla “obs_stock”.Por cada uno de los años.</p>
+<p>La celda por año con la cantidad de estudiantes que fallecieron, es
+igual al resultado de una función condicional, que indica: “Si en”df”,
+en la columna “agno” es igual a ‘2004’, entonces suma todas las
+observaciones que indiquen ‘Xt_XA = 1’ del dataframe “obs_stock2004”,
+como se indica en el <a href="#df_idstock">2.1 DataFrame | 2.1.7
+Identificar Stock</a>, ‘Xt_XA’ es una variable dummy, por tanto es una
+suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>#&quot;Xt_XA&quot;    = No Matriculado en t y nunca antes
 df$Xt_XA &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$Xt_XA, na.rm = TRUE),
                    (ifelse(df$agno ==2005, sum(obs_stock2005$Xt_XA, na.rm = TRUE),
@@ -23086,8 +23238,17 @@ df$Xt_XA &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$Xt_XA, na.rm = TRUE),
 </div>
 <div id="mguno" class="section level4">
 <h4>2.3.13 Flujo 1</h4>
-<p>Son los estudiantes que en el Stock de Origen se encontraba en Xt_XA (Pre-Escolar) y Stock de destino se encontraba en Rt (Matrícula Educación Regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 1. Matrícula Regular 1° vez”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘1 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘1’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en el Stock de Origen se encontraba en Xt_XA
+(Pre-Escolar) y Stock de destino se encontraba en Rt (Matrícula
+Educación Regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 1. Matrícula Regular 1° vez”, es igual al resultado de una
+función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘1 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘1’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>#### Flujo ####
 
 &quot;1&quot;
@@ -23109,8 +23270,18 @@ df$&quot;1&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;1&quot;, n
 </div>
 <div id="mgdos" class="section level4">
 <h4>2.3.14 Flujo 2</h4>
-<p>Son los estudiantes que en el Stock de Origen Stock de Origen se encontraba en Rt (Matrícula Educación Regular) y Stock de destino se encontraba en Rt (Matrícula Educación Regular), pero en diferente nivel.</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 2. Trayectoria Regular”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘2 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘2’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en el Stock de Origen Stock de Origen se
+encontraba en Rt (Matrícula Educación Regular) y Stock de destino se
+encontraba en Rt (Matrícula Educación Regular), pero en diferente
+nivel.</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 2. Trayectoria Regular”, es igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘2 = 1’ del
+dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘2’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;2&quot;
 df$&quot;2&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;2&quot;, na.rm = TRUE),
                  (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;2&quot;, na.rm = TRUE),
@@ -23130,8 +23301,17 @@ df$&quot;2&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;2&quot;, n
 </div>
 <div id="mgtres" class="section level4">
 <h4>2.3.15 Flujo 3</h4>
-<p>Son los estudiantes que en el Stock de Origen Stock de Origen se encontraba en Rt (Matrícula Educación Regular) y Stock de destino se encontraba en Rt (Matrícula Educación Regular), pero en igual nivel.</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 3 | Repitentes”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘3 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘3’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en el Stock de Origen Stock de Origen se
+encontraba en Rt (Matrícula Educación Regular) y Stock de destino se
+encontraba en Rt (Matrícula Educación Regular), pero en igual nivel.</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 3 | Repitentes”, es igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘3 = 1’ del
+dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘3’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;3&quot;
 df$&quot;3&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;3&quot;, na.rm = TRUE),
                  (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;3&quot;, na.rm = TRUE),
@@ -23151,8 +23331,17 @@ df$&quot;3&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;3&quot;, n
 </div>
 <div id="mgcuatro" class="section level4">
 <h4>2.3.16 Flujo 4</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Rt (matrícula regular) y Stock de destino se encontraba en Xt_G (Graduados de 4° medio).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 4 | Graduación Regular”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘4 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘4’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Rt
+(matrícula regular) y Stock de destino se encontraba en Xt_G (Graduados
+de 4° medio).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 4 | Graduación Regular”, es igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘4 = 1’ del
+dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘4’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;4&quot;
 df$&quot;4&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;4&quot;, na.rm = TRUE),
                  (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;4&quot;, na.rm = TRUE),
@@ -23172,8 +23361,19 @@ df$&quot;4&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;4&quot;, n
 </div>
 <div id="mgcinco" class="section level4">
 <h4>2.3.17 Flujo 5</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_XA (Pre-Escolar) y Stock de destino se encontraba en At_Xt-1 (Excluidos Educación Regular). Es importante decir que si bien en la realidad, es poco probable que una persona pueda pasar de pre-básica a educación adulta, en los registros administrativos se ven estos casos.</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 5 | Matrícula Adulta 1a Vez”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘5 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘5’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_XA
+(Pre-Escolar) y Stock de destino se encontraba en At_Xt-1 (Excluidos
+Educación Regular). Es importante decir que si bien en la realidad, es
+poco probable que una persona pueda pasar de pre-básica a educación
+adulta, en los registros administrativos se ven estos casos.</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 5 | Matrícula Adulta 1a Vez”, es igual al resultado de una
+función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘5 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘5’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;5&quot;
 df$&quot;5&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;5&quot;, na.rm = TRUE),
                  (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;5&quot;, na.rm = TRUE),
@@ -23193,8 +23393,17 @@ df$&quot;5&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;5&quot;, n
 </div>
 <div id="mgseis" class="section level4">
 <h4>2.3.18 Flujo 6</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en At* (Enseñanza adulta) y Stock de destino se encontraba en Xt_G (Graduado).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 6 | Graduación Adulta”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘6 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘6’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en At*
+(Enseñanza adulta) y Stock de destino se encontraba en Xt_G
+(Graduado).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 6 | Graduación Adulta”, es igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘6 = 1’ del
+dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘6’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;6&quot;
 df$&quot;6&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;6&quot;, na.rm = TRUE),
                  (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;6&quot;, na.rm = TRUE),
@@ -23214,8 +23423,17 @@ df$&quot;6&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;6&quot;, n
 </div>
 <div id="mgsiete" class="section level4">
 <h4>2.3.19 Flujo 7</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Rt (Enseñanza regular) y Stock de destino se encontraba en At_Rt-1 (abandono regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 7 | Abandono Regular (R -&gt; A)”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘7 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘7’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Rt
+(Enseñanza regular) y Stock de destino se encontraba en At_Rt-1
+(abandono regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 7 | Abandono Regular (R -&gt; A)”, es igual al resultado de una
+función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘7 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘7’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;7&quot;
 df$&quot;7&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;7&quot;, na.rm = TRUE),
                  (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;7&quot;, na.rm = TRUE),
@@ -23235,8 +23453,17 @@ df$&quot;7&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;7&quot;, n
 </div>
 <div id="mgocho" class="section level4">
 <h4>2.3.20 Flujo 8</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Rt (Enseñanza regular) y Stock de destino se encontraba en Xt_Rt-1 (abandono global).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 8 | Abandono Global (R -&gt; X)”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘8 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘8’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Rt
+(Enseñanza regular) y Stock de destino se encontraba en Xt_Rt-1
+(abandono global).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 8 | Abandono Global (R -&gt; X)”, es igual al resultado de una
+función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘8 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘8’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;8&quot;
 df$&quot;8&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;8&quot;, na.rm = TRUE),
                  (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;8&quot;, na.rm = TRUE),
@@ -23256,8 +23483,17 @@ df$&quot;8&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;8&quot;, n
 </div>
 <div id="mgnueve" class="section level4">
 <h4>2.3.21 Flujo 9</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Rt (Enseñanza regular) y Stock de destino se encontraba en Xt_Rt-1 (abandono global).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 9 | Exclusión Regular (R -&gt; A -&gt; A)”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘9 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘9’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Rt
+(Enseñanza regular) y Stock de destino se encontraba en Xt_Rt-1
+(abandono global).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 9 | Exclusión Regular (R -&gt; A -&gt; A)”, es igual al resultado
+de una función condicional, que indica: “Si en”df”, en la columna “agno”
+es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘9
+= 1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘9’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;9&quot;
 df$&quot;9&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;9&quot;, na.rm = TRUE),
                  (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;9&quot;, na.rm = TRUE),
@@ -23277,8 +23513,17 @@ df$&quot;9&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;9&quot;, n
 </div>
 <div id="mgdiez" class="section level4">
 <h4>2.3.22 Flujo 10</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Rt-1 (abandono regular) y Stock de destino se encontraba en At_Xt-1 (Excluidos Educación Regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 10 | Exclusión Regular (R -&gt; X -&gt; A)”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘10 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘10’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Rt-1
+(abandono regular) y Stock de destino se encontraba en At_Xt-1
+(Excluidos Educación Regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 10 | Exclusión Regular (R -&gt; X -&gt; A)”, es igual al
+resultado de una función condicional, que indica: “Si en”df”, en la
+columna “agno” es igual a ‘2004’, entonces suma todas las observaciones
+que indiquen ‘10 = 1’ del dataframe “obs_stock2004”, como se indica en
+el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>,
+‘10’ es una variable dummy, por tanto es una suma de valores “1”,
+omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;10&quot;
 df$&quot;10&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;10&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;10&quot;, na.rm = TRUE),
@@ -23298,8 +23543,17 @@ df$&quot;10&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;10&quot;,
 </div>
 <div id="mgonce" class="section level4">
 <h4>2.3.23 Flujo 11</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en At_Rt-1 (Abandonados Educación Regular) y Stock de destino se encontraba en Xt_At-1 (Excluidos Educación Regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 11 | Exclusión Regular y Abandono Global”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘11 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘11’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en At_Rt-1
+(Abandonados Educación Regular) y Stock de destino se encontraba en
+Xt_At-1 (Excluidos Educación Regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 11 | Exclusión Regular y Abandono Global”, es igual al resultado
+de una función condicional, que indica: “Si en”df”, en la columna “agno”
+es igual a ‘2004’, entonces suma todas las observaciones que indiquen
+‘11 = 1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘11’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;11&quot;
 df$&quot;11&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;11&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;11&quot;, na.rm = TRUE),
@@ -23319,8 +23573,17 @@ df$&quot;11&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;11&quot;,
 </div>
 <div id="mgdoce" class="section level4">
 <h4>2.3.24 Flujo 12</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Rt-1 (Abandonados Educación Regular) y Stock de destino se encontraba en Xt_Xt-1 (Excluidos Educación Regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 12 | Exclusión Regular y Global (R -&gt; X -&gt; X)”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘12 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘12’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Rt-1
+(Abandonados Educación Regular) y Stock de destino se encontraba en
+Xt_Xt-1 (Excluidos Educación Regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 12 | Exclusión Regular y Global (R -&gt; X -&gt; X)”, es igual al
+resultado de una función condicional, que indica: “Si en”df”, en la
+columna “agno” es igual a ‘2004’, entonces suma todas las observaciones
+que indiquen ‘12 = 1’ del dataframe “obs_stock2004”, como se indica en
+el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>,
+‘12’ es una variable dummy, por tanto es una suma de valores “1”,
+omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;12&quot;
 df$&quot;12&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;12&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;12&quot;, na.rm = TRUE),
@@ -23340,8 +23603,17 @@ df$&quot;12&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;12&quot;,
 </div>
 <div id="mgtrece" class="section level4">
 <h4>2.3.25 Flujo 13</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_At-1 (Excluidos Educación Regular) y Stock de destino se encontraba en Xt_Xt-1 (Excluidos Educación Regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 13 | Exclusión Global (A -&gt; X -&gt; X)”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘13 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘13’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_At-1
+(Excluidos Educación Regular) y Stock de destino se encontraba en
+Xt_Xt-1 (Excluidos Educación Regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 13 | Exclusión Global (A -&gt; X -&gt; X)”, es igual al resultado
+de una función condicional, que indica: “Si en”df”, en la columna “agno”
+es igual a ‘2004’, entonces suma todas las observaciones que indiquen
+‘13 = 1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘13’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;13&quot;
 df$&quot;13&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;13&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;13&quot;, na.rm = TRUE),
@@ -23361,8 +23633,17 @@ df$&quot;13&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;13&quot;,
 </div>
 <div id="mgcatorce" class="section level4">
 <h4>2.3.26 Flujo 14</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en At_At-1 o At_Xt-1 (Excluidos Educación Regular) y Stock de destino se encontraba en Xt (no matriculado).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 14 | Exclusión Global (A -&gt; X)”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘14 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘14’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en At_At-1 o
+At_Xt-1 (Excluidos Educación Regular) y Stock de destino se encontraba
+en Xt (no matriculado).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 14 | Exclusión Global (A -&gt; X)”, es igual al resultado de una
+función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘14 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘14’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;14&quot;
 df$&quot;14&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;14&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;14&quot;, na.rm = TRUE),
@@ -23382,8 +23663,17 @@ df$&quot;14&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;14&quot;,
 </div>
 <div id="mgquince" class="section level4">
 <h4>2.3.27 Flujo 15</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en At* (matriculado en educación adulta) y Stock de destino se encontraba en Rt (Educación regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 15 | De Adulta a Regular”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘15 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘15’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en At*
+(matriculado en educación adulta) y Stock de destino se encontraba en Rt
+(Educación regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 15 | De Adulta a Regular”, es igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘15 = 1’ del
+dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘15’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;15&quot;
 df$&quot;15&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;15&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;15&quot;, na.rm = TRUE),
@@ -23403,8 +23693,17 @@ df$&quot;15&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;15&quot;,
 </div>
 <div id="mgdieciseis" class="section level4">
 <h4>2.3.28 Flujo 16</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Rt-1 (Abandono en educación adulta) y Stock de destino se encontraba en Rt (Educación regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 16 | De Abandonados Globales a Regular”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘16 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘16’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Rt-1
+(Abandono en educación adulta) y Stock de destino se encontraba en Rt
+(Educación regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 16 | De Abandonados Globales a Regular”, es igual al resultado de
+una función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘16 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘16’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;16&quot;
 df$&quot;16&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;16&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;16&quot;, na.rm = TRUE),
@@ -23424,8 +23723,17 @@ df$&quot;16&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;16&quot;,
 </div>
 <div id="mgdiecisiete" class="section level4">
 <h4>2.3.29 Flujo 17</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_At-1 (Excluido de la educación regular) y Stock de destino se encontraba en Rt (Educación regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 17 | De Excluidos Educación Regular a Regular”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘17 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘17’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_At-1
+(Excluido de la educación regular) y Stock de destino se encontraba en
+Rt (Educación regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 17 | De Excluidos Educación Regular a Regular”, es igual al
+resultado de una función condicional, que indica: “Si en”df”, en la
+columna “agno” es igual a ‘2004’, entonces suma todas las observaciones
+que indiquen ‘17 = 1’ del dataframe “obs_stock2004”, como se indica en
+el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>,
+‘17’ es una variable dummy, por tanto es una suma de valores “1”,
+omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;17&quot;
 df$&quot;17&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;17&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;17&quot;, na.rm = TRUE),
@@ -23445,8 +23753,17 @@ df$&quot;17&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;17&quot;,
 </div>
 <div id="mgdieciocho" class="section level4">
 <h4>2.3.30 Flujo 18</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_At-1 (Excluido de la educación regular) y Stock de destino se encontraba en At (Educación Adulta).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 18 | De Excluidos Educación Regular a Adulta”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘18 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘18’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_At-1
+(Excluido de la educación regular) y Stock de destino se encontraba en
+At (Educación Adulta).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 18 | De Excluidos Educación Regular a Adulta”, es igual al
+resultado de una función condicional, que indica: “Si en”df”, en la
+columna “agno” es igual a ‘2004’, entonces suma todas las observaciones
+que indiquen ‘18 = 1’ del dataframe “obs_stock2004”, como se indica en
+el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>,
+‘18’ es una variable dummy, por tanto es una suma de valores “1”,
+omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;18&quot;
 df$&quot;18&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;18&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;18&quot;, na.rm = TRUE),
@@ -23466,8 +23783,17 @@ df$&quot;18&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;18&quot;,
 </div>
 <div id="mgdiecinueve" class="section level4">
 <h4>2.3.31 Flujo 19</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Xt-1 (Excluido de la educación regular) y Stock de destino se encontraba en Rt (Educación regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 19 | De Excluidos Globales a Regular”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘19 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘19’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Xt-1
+(Excluido de la educación regular) y Stock de destino se encontraba en
+Rt (Educación regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 19 | De Excluidos Globales a Regular”, es igual al resultado de
+una función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘19 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘19’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;19&quot;
 df$&quot;19&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;19&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;19&quot;, na.rm = TRUE),
@@ -23487,8 +23813,17 @@ df$&quot;19&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;19&quot;,
 </div>
 <div id="mgveinte" class="section level4">
 <h4>2.3.32 Flujo 20</h4>
-<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Xt-1 (Excluido de la educación regular) y Stock de destino se encontraba en At (Educación Afulta).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 20 | De Excluidos Globales a Adulta”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘20 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘20’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encontraba en Xt_Xt-1
+(Excluido de la educación regular) y Stock de destino se encontraba en
+At (Educación Afulta).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 20 | De Excluidos Globales a Adulta”, es igual al resultado de
+una función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘20 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘20’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;20&quot;
 df$&quot;20&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;20&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;20&quot;, na.rm = TRUE),
@@ -23508,8 +23843,16 @@ df$&quot;20&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;20&quot;,
 </div>
 <div id="mgveintiuno" class="section level4">
 <h4>2.3.33 Flujo 21</h4>
-<p>Son los estudiantes que en Stock de Origen no se encuentran matriculados y Stock de destino se encontraba en Xt_G (Graduados).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 21 | Graduación Asumida por Educación Superior”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘21 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘21’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen no se encuentran
+matriculados y Stock de destino se encontraba en Xt_G (Graduados).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 21 | Graduación Asumida por Educación Superior”, es igual al
+resultado de una función condicional, que indica: “Si en”df”, en la
+columna “agno” es igual a ‘2004’, entonces suma todas las observaciones
+que indiquen ‘21 = 1’ del dataframe “obs_stock2004”, como se indica en
+el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>,
+‘21’ es una variable dummy, por tanto es una suma de valores “1”,
+omitiendo los valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;21&quot;
 df$&quot;21&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;21&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;21&quot;, na.rm = TRUE),
@@ -23529,8 +23872,16 @@ df$&quot;21&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;21&quot;,
 </div>
 <div id="mgveintidos" class="section level4">
 <h4>2.3.34 Flujo 22</h4>
-<p>Son los estudiantes que en Stock de Origen no se encuentran matriculados y Stock de destino se encontraba en Xt_F (Fallecen).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 22 | Fallecen”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘22 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘22’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen no se encuentran
+matriculados y Stock de destino se encontraba en Xt_F (Fallecen).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 22 | Fallecen”, es igual al resultado de una función condicional,
+que indica: “Si en”df”, en la columna “agno” es igual a ‘2004’, entonces
+suma todas las observaciones que indiquen ‘22 = 1’ del dataframe
+“obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1
+DataFrame | 2.1.8 Identificar Flujo</a>, ‘22’ es una variable dummy, por
+tanto es una suma de valores “1”, omitiendo los valores NA que puedan
+aparecer.</p>
 <pre class="r"><code>&quot;22&quot;
 df$&quot;22&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;22&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;22&quot;, na.rm = TRUE),
@@ -23550,8 +23901,17 @@ df$&quot;22&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;22&quot;,
 </div>
 <div id="mgveintitres" class="section level4">
 <h4>2.3.35 Flujo 23</h4>
-<p>Son los estudiantes que en Stock de Origen se encuentren en Xt_XA (No matriculado nunca antes) y Stock de destino se encontraba en Xt_XA (No matriculado nunca antes).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 23 | Siguen en Pre-Escolar”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘23 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘23’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encuentren en Xt_XA (No
+matriculado nunca antes) y Stock de destino se encontraba en Xt_XA (No
+matriculado nunca antes).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 23 | Siguen en Pre-Escolar”, es igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘23 = 1’ del
+dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘23’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;23&quot;
 df$&quot;23&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;23&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;23&quot;, na.rm = TRUE),
@@ -23571,8 +23931,17 @@ df$&quot;23&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;23&quot;,
 </div>
 <div id="mgveinticuatro" class="section level4">
 <h4>2.3.36 Flujo 24</h4>
-<p>Son los estudiantes que en Stock de Origen se encuentren en “At_At-1”o “At_Xt-1” (Excluidos Educación Regular) y Stock de destino se encontraba en “At_At-1” o “At_Xt-1” (Excluidos Educación Regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 24 | Trayectoria Adulta”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘24 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘24’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encuentren en
+“At_At-1”o “At_Xt-1” (Excluidos Educación Regular) y Stock de destino se
+encontraba en “At_At-1” o “At_Xt-1” (Excluidos Educación Regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 24 | Trayectoria Adulta”, es igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘24 = 1’ del
+dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘24’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;24&quot;
 df$&quot;24&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;24&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;24&quot;, na.rm = TRUE),
@@ -23592,8 +23961,17 @@ df$&quot;24&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;24&quot;,
 </div>
 <div id="mgveinticinco" class="section level4">
 <h4>2.3.37 Flujo 25</h4>
-<p>Son los estudiantes que en Stock de Origen se encuentren en “Xt_Xt-1” (Excluidos Educación Regular) y Stock de destino se encontraba en “Xt_Xt-1” (Excluidos Educación Regular).</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 25 | Siguen Excluidos Globales”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘25 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘25’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encuentren en “Xt_Xt-1”
+(Excluidos Educación Regular) y Stock de destino se encontraba en
+“Xt_Xt-1” (Excluidos Educación Regular).</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 25 | Siguen Excluidos Globales”, es igual al resultado de una
+función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘25 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘25’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;25&quot;
 df$&quot;25&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;25&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;25&quot;, na.rm = TRUE),
@@ -23613,8 +23991,16 @@ df$&quot;25&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;25&quot;,
 </div>
 <div id="mgveintiseis" class="section level4">
 <h4>2.3.38 Flujo 26</h4>
-<p>Son los estudiantes que en Stock de Origen se encuentren en “Xt_G” (Graduados) y no tienen Stock de destino.</p>
-<p>La celda por año con la cantidad de estudiantes que están en el " Flujo 26 | Siguen Graduados 4° Medio“, es igual al resultado de una función condicional, que indica:”Si en “df”, en la columna “agno” es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘26 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘26’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encuentren en “Xt_G”
+(Graduados) y no tienen Stock de destino.</p>
+<p>La celda por año con la cantidad de estudiantes que están en el ”
+Flujo 26 | Siguen Graduados 4° Medio”, es igual al resultado de una
+función condicional, que indica: “Si en”df”, en la columna “agno” es
+igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘26 =
+1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘26’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;26&quot;
 df$&quot;26&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;26&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;26&quot;, na.rm = TRUE),
@@ -23634,8 +24020,16 @@ df$&quot;26&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;26&quot;,
 </div>
 <div id="mgveintisiete" class="section level4">
 <h4>2.3.39 Flujo 27</h4>
-<p>Son los estudiantes que en Stock de Origen se encuentren en “Xt_F” (Fallecidos) y no tienen Stock de destino.</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 27 | Siguen Fallecidos”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘27 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘27’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de Origen se encuentren en “Xt_F”
+(Fallecidos) y no tienen Stock de destino.</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 27 | Siguen Fallecidos”, es igual al resultado de una función
+condicional, que indica: “Si en”df”, en la columna “agno” es igual a
+‘2004’, entonces suma todas las observaciones que indiquen ‘27 = 1’ del
+dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘27’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;27&quot;
 df$&quot;27&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;27&quot;, na.rm = TRUE),
                   (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;27&quot;, na.rm = TRUE),
@@ -23655,8 +24049,16 @@ df$&quot;27&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;27&quot;,
 </div>
 <div id="mgveintisiete" class="section level4">
 <h4>2.3.40 Flujo 254</h4>
-<p>Son los estudiantes que en Stock de destino se encuentren en “Null o NA” (no tienen información válida)</p>
-<p>La celda por año con la cantidad de estudiantes que están en el “Flujo 254 | Sin información, t+1 en el futuro”, es igual al resultado de una función condicional, que indica: “Si en”df“, en la columna”agno" es igual a ‘2004’, entonces suma todas las observaciones que indiquen ‘254 = 1’ del dataframe “obs_stock2004”, como se indica en el <a href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘254’ es una variable dummy, por tanto es una suma de valores “1”, omitiendo los valores NA que puedan aparecer.</p>
+<p>Son los estudiantes que en Stock de destino se encuentren en “Null o
+NA” (no tienen información válida)</p>
+<p>La celda por año con la cantidad de estudiantes que están en el
+“Flujo 254 | Sin información, t+1 en el futuro”, es igual al resultado
+de una función condicional, que indica: “Si en”df”, en la columna “agno”
+es igual a ‘2004’, entonces suma todas las observaciones que indiquen
+‘254 = 1’ del dataframe “obs_stock2004”, como se indica en el <a
+href="#df_idflujo">2.1 DataFrame | 2.1.8 Identificar Flujo</a>, ‘254’ es
+una variable dummy, por tanto es una suma de valores “1”, omitiendo los
+valores NA que puedan aparecer.</p>
 <pre class="r"><code>&quot;254&quot;
 df$&quot;254&quot; &lt;- ifelse(df$agno ==2004, sum(obs_stock2004$&quot;254&quot;, na.rm = TRUE),
                    (ifelse(df$agno ==2005, sum(obs_stock2005$&quot;254&quot;, na.rm = TRUE),
@@ -28931,7 +29333,9 @@ Obs_val$ingreso_38[is.na(Obs_val$ingreso_38)] &lt;- 0</code></pre>
 </div>
 <div id="análisis-tramo" class="section level4">
 <h4>3.1.7 Análisis tramo</h4>
-<p>Al momento de elegir el tramo respectivo al ingreso, muchas veces se elige más de un tramo. A veces incluso todos, para revisar esa situación se sacó la suma total del ingreso. Luego se revisa la distribución.</p>
+<p>Al momento de elegir el tramo respectivo al ingreso, muchas veces se
+elige más de un tramo. A veces incluso todos, para revisar esa situación
+se sacó la suma total del ingreso. Luego se revisa la distribución.</p>
 <pre class="r"><code>Obs_val$ingreso=(Obs_val$ingreso_01+
                    Obs_val$ingreso_02+
                    Obs_val$ingreso_03+
@@ -28977,7 +29381,11 @@ table(Obs_val$ingreso)</code></pre>
 </div>
 <div id="recodificación-ingreso" class="section level4">
 <h4>3.1.8 Recodificación ingreso</h4>
-<p>Se revisa la suma de todos los ingresos totales, se observan todas las posibilidades y en base al total del ingreso, se decide elegir un máximo en caso de que hayan marcado el tramo de ingreso correspondiente, esta elección es a la frecuencia más elevada de aparición del ingreso en el grupo.</p>
+<p>Se revisa la suma de todos los ingresos totales, se observan todas
+las posibilidades y en base al total del ingreso, se decide elegir un
+máximo en caso de que hayan marcado el tramo de ingreso correspondiente,
+esta elección es a la frecuencia más elevada de aparición del ingreso en
+el grupo.</p>
 <pre class="r"><code>Obs_val$ingreso[Obs_val$ingreso == 78 &amp; Obs_val$ingreso_38 == 13 ] &lt;- 13
 Obs_val$ingreso[Obs_val$ingreso == 78 &amp; Obs_val$ingreso_37 == 13 ] &lt;- 13
 Obs_val$ingreso[Obs_val$ingreso == 78 &amp; Obs_val$ingreso_36 == 13 ] &lt;- 13
@@ -29053,7 +29461,10 @@ Obs_val$ingreso[Obs_val$ingreso == 78 &amp; Obs_val$ingreso_04 == 12 ] &lt;- 12
 Obs_val$ingreso[Obs_val$ingreso == 78 &amp; Obs_val$ingreso_03 == 12 ] &lt;- 12
 Obs_val$ingreso[Obs_val$ingreso == 78 &amp; Obs_val$ingreso_02 == 12 ] &lt;- 12
 Obs_val$ingreso[Obs_val$ingreso == 78 &amp; Obs_val$ingreso_01 == 12 ] &lt;- 12</code></pre>
-<p>Se recorre desde el “ingreso == 78” a “ingreso == 14”, incluyendo los números intermedios, sin embargo no se agrega la cantidad total para no superar la cantidad máxima de megas que tolera R. El script se encuentra en extenso en el “NSE_ingreso.R”.</p>
+<p>Se recorre desde el “ingreso == 78” a “ingreso == 14”, incluyendo los
+números intermedios, sin embargo no se agrega la cantidad total para no
+superar la cantidad máxima de megas que tolera R. El script se encuentra
+en extenso en el “NSE_ingreso.R”.</p>
 <pre class="r"><code>Obs_val$ingreso[Obs_val$ingreso == 14 &amp; Obs_val$ingreso_38 == 02 ] &lt;- 02
 Obs_val$ingreso[Obs_val$ingreso == 14 &amp; Obs_val$ingreso_37 == 02 ] &lt;- 02
 Obs_val$ingreso[Obs_val$ingreso == 14 &amp; Obs_val$ingreso_36 == 02 ] &lt;- 02
@@ -29410,8 +29821,15 @@ Obs_val_madre$ens_madre[Obs_val_madre$ens_madre == 316 &amp; Obs_val_madre$ens_m
 Obs_val_madre$ens_madre[Obs_val_madre$ens_madre == 316 &amp; Obs_val_madre$ens_madre_03 == 20 ] &lt;- 20
 Obs_val_madre$ens_madre[Obs_val_madre$ens_madre == 316 &amp; Obs_val_madre$ens_madre_02 == 20 ] &lt;- 20
 Obs_val_madre$ens_madre[Obs_val_madre$ens_madre == 316 &amp; Obs_val_madre$ens_madre_01 == 20 ] &lt;- 20</code></pre>
-<p>Al igual que en Ingreso y el nivel de estudios del padre, se recorre desde el resultado máximo de la suma de los ingresos, que en este caso es ‘316’, hasta ‘22’, que sería el mínimo aceptable. Más que 21 significa que la persona marcó dos tramos diferentes de nivel de estudios.</p>
-<p>Se incluyen todos los valores intermedios, sin embargo, en los anexos no se agrega la cantidad total para no superar la cantidad máxima de megas que tolera R. El script se encuentra en extenso en el “NSE_madre.R”.</p>
+<p>Al igual que en Ingreso y el nivel de estudios del padre, se recorre
+desde el resultado máximo de la suma de los ingresos, que en este caso
+es ‘316’, hasta ‘22’, que sería el mínimo aceptable. Más que 21
+significa que la persona marcó dos tramos diferentes de nivel de
+estudios.</p>
+<p>Se incluyen todos los valores intermedios, sin embargo, en los anexos
+no se agrega la cantidad total para no superar la cantidad máxima de
+megas que tolera R. El script se encuentra en extenso en el
+“NSE_madre.R”.</p>
 <pre class="r"><code>Obs_val_madre$ens_madre[Obs_val_madre$ens_madre == 22 &amp; Obs_val_madre$ens_madre_38 == 01 ] &lt;- 01
 Obs_val_madre$ens_madre[Obs_val_madre$ens_madre == 22 &amp; Obs_val_madre$ens_madre_37 == 01 ] &lt;- 01
 Obs_val_madre$ens_madre[Obs_val_madre$ens_madre == 22 &amp; Obs_val_madre$ens_madre_36 == 01 ] &lt;- 01
@@ -29727,8 +30145,15 @@ Obs_val_padre$ens_padre[Obs_val_padre$ens_padre == 314 &amp; Obs_val_padre$ens_p
 Obs_val_padre$ens_padre[Obs_val_padre$ens_padre == 314 &amp; Obs_val_padre$ens_padre_03 == 20 ] &lt;- 20
 Obs_val_padre$ens_padre[Obs_val_padre$ens_padre == 314 &amp; Obs_val_padre$ens_padre_02 == 20 ] &lt;- 20
 Obs_val_padre$ens_padre[Obs_val_padre$ens_padre == 314 &amp; Obs_val_padre$ens_padre_01 == 20 ] &lt;- 20</code></pre>
-<p>Al igual que en Ingreso y el nivel de estudios de la madre, se recorre desde el resultado máximo de la suma de los ingresos, que en este caso es ‘314’, hasta ‘22’, que sería el mínimo aceptable. Más que 21 significa que la persona marcó dos tramos diferentes de nivel de estudios.</p>
-<p>Se incluyen todos los valores intermedios, sin embargo, en los anexos no se agrega la cantidad total para no superar la cantidad máxima de megas que tolera R. El script se encuentra en extenso en el “NSE_padre.R”.</p>
+<p>Al igual que en Ingreso y el nivel de estudios de la madre, se
+recorre desde el resultado máximo de la suma de los ingresos, que en
+este caso es ‘314’, hasta ‘22’, que sería el mínimo aceptable. Más que
+21 significa que la persona marcó dos tramos diferentes de nivel de
+estudios.</p>
+<p>Se incluyen todos los valores intermedios, sin embargo, en los anexos
+no se agrega la cantidad total para no superar la cantidad máxima de
+megas que tolera R. El script se encuentra en extenso en el
+“NSE_padre.R”.</p>
 <pre class="r"><code>Obs_val_padre$ens_padre[Obs_val_padre$ens_padre == 22 &amp; Obs_val_padre$ens_padre_18 == 01 ] &lt;- 01
 Obs_val_padre$ens_padre[Obs_val_padre$ens_padre == 22 &amp; Obs_val_padre$ens_padre_17 == 01 ] &lt;- 01
 Obs_val_padre$ens_padre[Obs_val_padre$ens_padre == 22 &amp; Obs_val_padre$ens_padre_16 == 01 ] &lt;- 01
@@ -31673,8 +32098,14 @@ library(readr)</code></pre>
 </div>
 <div id="tobsreemplazo" class="section level4">
 <h4>5.1.2 Reemplazo columnas</h4>
-<p>En la última versión de la tabla de observaciones si indicó que la cantidad de estudiantes excluidos en primer año, se encontraba fuera de los paramentos que pueden ser revisados en la literatura. Es por ello que se mantuvo la estructura de la tabla, pero se reemplazó el contenido.</p>
-<p>Es por ellos que a continuación se observa una eliminación de columnas, lo que también puede ser replicado en caso de desear actualizar columnas en particular y no todo el dataframe.</p>
+<p>En la última versión de la tabla de observaciones si indicó que la
+cantidad de estudiantes excluidos en primer año, se encontraba fuera de
+los paramentos que pueden ser revisados en la literatura. Es por ello
+que se mantuvo la estructura de la tabla, pero se reemplazó el
+contenido.</p>
+<p>Es por ellos que a continuación se observa una eliminación de
+columnas, lo que también puede ser replicado en caso de desear
+actualizar columnas en particular y no todo el dataframe.</p>
 <pre class="r"><code># BD_PR -------------------------------------------------------------------
 
 
@@ -31714,7 +32145,9 @@ BDAL_OBS &lt;- BDAL_OBS1506</code></pre>
 </div>
 <div id="tobsex" class="section level4">
 <h4>5.1.3 Abrir tablas exclusión</h4>
-<p>Se incorporan un DAtaset por cada cohorte estudiada, que son extraídas de tablas que son explicadas en otros scripts de este anexo.</p>
+<p>Se incorporan un DAtaset por cada cohorte estudiada, que son
+extraídas de tablas que son explicadas en otros scripts de este
+anexo.</p>
 <pre class="r"><code>#Tablas Exclusi?n
 T_Obs2004_R &lt;- readRDS(&quot;C:/FONDEF/Tabla Observaciones/TAB_CHRT/T_Obs2004_R.rds&quot;)
 T_Obs2005_R &lt;- readRDS(&quot;C:/FONDEF/Tabla Observaciones/TAB_CHRT/T_Obs2005_R.rds&quot;)
@@ -33251,29 +33684,30 @@ rm(BD_OBS,BDAL_OBS04,BDAL_OBS05,BDAL_OBS06,BDAL_OBS07,BDAL_OBS08,BDAL_OBS3)</cod
 </div>
 <div id="ccnse" class="section level4">
 <h4>5.2.9 Juntar NSE</h4>
-<pre class="r"><code>NSE &lt;- readRDS(&quot;C:/FONDEF/Tabla Observaciones/NSE.rds&quot;)
-summary(NSE$NSE)
-NSE$NSE[NSE$NSE==&quot;NA&quot;]=-999
-NSE$NSE=as.numeric(NSE$NSE)
-summary(NSE$NSE)
-names(NSE)
-NSE=NSE[,-2:-7]
-names(NSE)
-names(NSE)[1]=c(&quot;mrun&quot;)
-names(NSE)
-GRUPO=group_by(NSE,mrun)
-dato=summarise(GRUPO,n=n())
-
-NSE=merge(NSE,dato,by=&quot;mrun&quot;,all.x = TRUE)
-NSE=NSE[NSE$n==1,]
-NSE=NSE[,-3]
-
-BD_GUARD=BDAL_OBS
-BORRAR=merge(NSE,base_TED,by=&quot;mrun&quot;,all.x = TRUE)
-BDAL_OBS= merge(BDAL_OBS,NSE,by=&quot;mrun&quot;,all.x = TRUE) 
-BDAL_OBS=BDAL_OBS[,-38]
-names(BDAL_OBS)
-sort(unique(BDAL_OBS$NSE))</code></pre>
+<pre class="r"><code>  ```{r eval = FALSE}
+  NSE &lt;- readRDS(&quot;C:/FONDEF/Tabla Observaciones/NSE.rds&quot;)
+  summary(NSE$NSE)
+  NSE$NSE[NSE$NSE==&quot;NA&quot;]=-999
+  NSE$NSE=as.numeric(NSE$NSE)
+  summary(NSE$NSE)
+  names(NSE)
+  NSE=NSE[,-2:-7]
+  names(NSE)
+  names(NSE)[1]=c(&quot;mrun&quot;)
+  names(NSE)
+  GRUPO=group_by(NSE,mrun)
+  dato=summarise(GRUPO,n=n())
+  
+  NSE=merge(NSE,dato,by=&quot;mrun&quot;,all.x = TRUE)
+  NSE=NSE[NSE$n==1,]
+  NSE=NSE[,-3]
+  
+  BD_GUARD=BDAL_OBS
+  BORRAR=merge(NSE,base_TED,by=&quot;mrun&quot;,all.x = TRUE)
+  BDAL_OBS= merge(BDAL_OBS,NSE,by=&quot;mrun&quot;,all.x = TRUE) 
+  BDAL_OBS=BDAL_OBS[,-38]
+  names(BDAL_OBS)
+  sort(unique(BDAL_OBS$NSE))</code></pre>
 </div>
 <div id="ccguardar" class="section level4">
 <h4>5.2.10 Guardar BDAL_OBS1905.csv</h4>
@@ -33296,7 +33730,7 @@ sort(unique(BDAL_OBS$NSE))</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -33314,7 +33748,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -33323,6 +33757,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

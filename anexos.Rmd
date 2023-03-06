@@ -209,7 +209,8 @@ Mediante el comando "Rbind" se unen tanto las tablas de Stock y Flujos, como las
 ```{r eval = FALSE}
 
 
-#Rbind ------------------------------------------------------------
+#Rbind ----------------------------------------(list = ls())
+###LIBRERIAS--------------------
 # PARAMETROS
 rm(list = ls())
 ###LIBRERIAS
