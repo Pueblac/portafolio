@@ -1,6 +1,6 @@
 ---
-title: "César Puebla R."
-author: ""
+title: "Presentación"
+author: "César Puebla R."
 date: "01-01-2023"
 output: 
   html_document:
@@ -18,11 +18,11 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Presentación {.unnumbered}
+
 
 Soy Sociólogo e Ingeniero de Ejecución en Prevención de Riesgos con más de 9 años de experiencia en análisis de datos, automatización de reportes, diseño y visualización de información. Me considero metódico, proactivo, y disfruto trabajar en equipos multidisciplinarios para abordar desafíos tanto públicos como privados. He coordinado proyectos en la Universidad de Chile, asesorado a la Municipalidad de Peñalolén, trabajado en la SEREMI Educación de la Región Metropolitana y en el Consejo para la Transparencia.
 
-## Contenido del portafolio {.unnumbered}
+# Contenido {.unnumbered}
 
 La presente documentación tiene como objetivo mostrar el uso de *script*, archivos, así como tablas de entrada y salida, en el marco de un proyecto desarrollado en R y puesto a disposición de cualquier persona que quisiera replicarlo. 
 
@@ -46,6 +46,8 @@ Se profundizará en seis contenidos:
 Por otra parte, para ver el repositorio completo, así como la estructura de carpetas y archivos que lo componen les recomiendo visitar el siguiente link [Repositorio en GitHub](https://github.com/Pueblac/portafolio) que se va actualizando periódicamente. En tanto, para la redacción se utilizó  [R Mardown](https://rmarkdown.rstudio.com/) ya que admite formatos de salida estáticos y dinámicos, incluyendo HTML, PDF, MS Word, Beamer, diapositivas HTML5, folletos al estilo Tufte, libros, paneles dinámicos, entre otros.   
 
 ## Control de versiones {.unnumbered}
+
+Para el control de cambios del presente proyecto se utiliza [Git](https://git-scm.com/), el cual registra las distintas versiones de un archivo (o conjunto de archivos). 
 
 
 
