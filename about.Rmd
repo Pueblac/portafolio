@@ -1,6 +1,6 @@
 ---
-title: "Presentación"
-author: "César Puebla R."
+title: "César Puebla R."
+author: ""
 date: "01-01-2023"
 output: 
   html_document:
@@ -18,27 +18,37 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+# Presentación {.unnumbered}
 
+Soy Sociólogo e Ingeniero de Ejecución en Prevención de Riesgos con más de 9 años de experiencia en análisis de datos, automatización de reportes, diseño y visualización de información. Me considero metódico, proactivo, y disfruto trabajar en equipos multidisciplinarios para abordar desafíos tanto públicos como privados. He coordinado proyectos en la Universidad de Chile, asesorado a la Municipalidad de Peñalolén, trabajado en la SEREMI Educación de la Región Metropolitana y en el Consejo para la Transparencia.
 
-Soy Sociólogo e Ingeniero de Ejecución en Prevención de Riesgos con más de 9 años de experiencia en análisis de datos, automatización de reportes, diseño y visualización de información. Me considero metódico, proactivo, y disfruto trabajar en equipos multidisciplinarios para abordar desafíos tanto públicos como privados. He coordinado proyectos en la Universidad de Chile, asesorado a la Municipalidad de Peñalolén, trabajado en la SEREMI Educación de la Región Metropolitana y*script* en el Consejo para la Transparencia.
-
-# Contenido {.unnumbered}
+## Contenido del portafolio {.unnumbered}
 
 La presente documentación tiene como objetivo mostrar el uso de *script*, archivos, así como tablas de entrada y salida, en el marco de un proyecto desarrollado en R y puesto a disposición de cualquier persona que quisiera replicarlo. 
 
-Dicho lo anterior, se debe relevar que esto es un ejercicio de , de tal modo que los algoritmos, funciones, imágenes y bases de datos si bien puedan ser replicados, no son generalizables o extrapolables ni buscan ese objetivo. 
+Dicho lo anterior, se recalca que como portafolio los algoritmos, funciones, imágenes y bases de datos si bien puedan ser replicados, no son generalizables o extrapolables. 
 
+Se profundizará en seis contenidos:
 
-Se profundizará en seis contenidos, a saber:
-
-- Procesamiento de datos en Rstudio: Tiene en cuenta aspectos técnicos del uso de Rstudio, así como justificación del cambio desde SQLServer a Rstudio. 
-- Métricas: Se revisarán Stock y flujos, así como el modo de llegar a la prevalencia e incidencia como  principales productos.
-- NSE a partir del SIMCE: Trata del Nivel Socioeconómico, como cálculo surgido del ingreso familiar, nivel de estudios del padre y de la madre, a partir de datos administrativos provenientes del SIMCE.
-- Tabla de trayectorias: Tabla que reúne los datos de los estudiantes de las cohortes estudiadas (2004 a 2008), en tanto, el alcance es hasta el año 2018. 
-- Tabla de observaciones:Tabla que resume los datos de los estudiantes de la tabla de trayectorias.
+- Procesamiento de datos en Rstudio: Tiene en cuenta aspectos técnicos del uso de Rstudio. 
+- Cálculo de Métricas: Se revisarán Stock y flujos, así como el modo de llegar a la prevalencia e incidencia como  principales productos.
+- Estadística descriptiva: Trata del Nivel Socioeconómico, como cálculo surgido del ingreso familiar, nivel de estudios del padre y de la madre, a partir de datos administrativos provenientes del SIMCE.
+- Estadística multivariada: Tabla que reúne los datos de los estudiantes de las cohortes estudiadas (2004 a 2008), en tanto, el alcance es hasta el año 2018. 
+- Tablas y Gráficos:Tabla que resume los datos de los estudiantes de la tabla de trayectorias.
+- Dashboard: Muestra el complemento entre Shinyapp, FlexDashboard y el uso de Rmarkdown
+- Reportes Automatizados: Generación de documentos que se actualizan de acuerdo a la necesidad del usuario.
 - Anexos: Detalle del los algoritmos utilizados.
 
-Excluyendo el tema inicial que refiere al software procesamiento de datos, Cada uno de los ítems anteriormente mencionados, se encontrará subdividido en tres ámbitos: tablas de origen; script; y tablas de salida.
+
+
+## Uso de GitHub y RMarkdown {.unnumbered}
+
+Por otra parte, para ver el repositorio completo, así como la estructura de carpetas y archivos que lo componen les recomiendo visitar el siguiente link [Repositorio en GitHub](https://github.com/Pueblac/portafolio) que se va actualizando periódicamente. En tanto, para la redacción se utilizó  [R Mardown](https://rmarkdown.rstudio.com/) ya que admite formatos de salida estáticos y dinámicos, incluyendo HTML, PDF, MS Word, Beamer, diapositivas HTML5, folletos al estilo Tufte, libros, paneles dinámicos, entre otros.   
+
+## Control de versiones {.unnumbered}
+
+
+
 
 
 
