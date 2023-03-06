@@ -26,8 +26,7 @@ Soy Sociólogo e Ingeniero de Ejecución en Prevención de Riesgos con más de 9
 
 La presente documentación tiene como objetivo mostrar el uso de *script*, archivos, así como tablas de entrada y salida, en el marco de un proyecto desarrollado en R y puesto a disposición de cualquier persona que quisiera replicarlo. 
 
-Dicho lo anterior, se debe relevar que esto es un ejercicio de , de tal modo que los algoritmos, funciones, imágenes y bases de datos si bien puedan ser replicados, no son generalizables o extrapolables ni buscan ese objetivo. César Puebla y Rafaella Monsalve
-03-07-2020
+Dicho lo anterior, se debe relevar que esto es un ejercicio de , de tal modo que los algoritmos, funciones, imágenes y bases de datos si bien puedan ser replicados, no son generalizables o extrapolables ni buscan ese objetivo. 
 
 
 Se profundizará en seis contenidos, a saber:
