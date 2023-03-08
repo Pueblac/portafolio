@@ -10,6 +10,8 @@ output:
       collapsed: false
       smooth_scroll: true
       
+
+      
 #Nivel 1
 ##Nivel 2
 ###Nivel 3
@@ -577,7 +579,6 @@ Considerando lo expuesto se definieron los siguientes términos para el cálculo
 
 Que en el caso de la incidencia da un resultado con esta estructura:
 
-![](C:/Mi unidad/SegundaEntrega/FondefIT170006.github.io/Images/Incidencia.png)
 
 
 Por otro lado, en el caso de la Prevalencia se deben tener en cuenta además de los términos anteriores, lo siguientes:
@@ -589,15 +590,11 @@ Por otro lado, en el caso de la Prevalencia se deben tener en cuenta además de 
 
 LA tabla de salida de la prevalencia tiene esta estructura:
 
-![](C:/Mi unidad/SegundaEntrega/FondefIT170006.github.io/Images/prevalencia.png)
-
 
 
 ### Definición de Stock {#defstock}
 
 Una forma de mirar el fenómeno de la exclusión educativa guarda relación con el movimiento de los estudiantes de un estado a otro. En este sentido, se entenderá como “stock” a una variable numérica que es una cantidad de estudiante en un año determinado, por ejemplo, un total acumulado de la cantidad de estudiantes matriculados en el año 2004 en primero básico. 
-
-![](C:/Mi unidad/SegundaEntrega/FondefIT170006.github.io/Images/stock.png)
 
 
 Lo que se aprecia en la imagen como tipos de Stock: Educación Pre- escolar, Educación regular, Educación Adulta, Graduados de 4° medio, Abandonados Globales, Excluidos Globales y fallecidos. Sin embargo, en el script de R, así como en el contenido de las variables de las tablas originales de Stock y Flujos, los "Stock" se encuentra codificados mediante identificadores. 
@@ -625,8 +622,6 @@ Xt_XA | Pre-Escolar | No Matriculado en t y nunca antes
 
 
 Una forma de mirar el fenómeno de la exclusión educativa guarda relación con el movimiento de los estudiantes de un estado a otro. Cuando una determinada cantidad de estudiantes aprueba y por tanto pasa de curso, se habla de una transferencia y se mide a través de un flujo, que es la cantidad de estudiantes que pasan de un estado a otro en un año determinado.
-
-![](C:/Mi unidad/SegundaEntrega/FondefIT170006.github.io/Images/Flujo.png)
 
 
 Cada uno de los flujos y la conformación se encuentran detallados en [Anexo| Métricas Generales ](anexos.html#mg)
