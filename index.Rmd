@@ -579,8 +579,6 @@ Considerando lo expuesto se definieron los siguientes términos para el cálculo
 
 Que en el caso de la incidencia da un resultado con esta estructura:
 
-
-
 Por otro lado, en el caso de la Prevalencia se deben tener en cuenta además de los términos anteriores, lo siguientes:
 
 -	Tasa de prevalencia de la exclusión regular: Refiere a la proporción de estudiantes de la modalidad básica y media formal que estando en un tramo de edad determinado, no han completado sus estudios escolares, como tampoco se encuentra matriculados en ningún establecimiento educacional formal en un periodo, teniendo en cuenta que la proporción se encuentra calculada con respecto a la población.
@@ -590,16 +588,13 @@ Por otro lado, en el caso de la Prevalencia se deben tener en cuenta además de 
 
 LA tabla de salida de la prevalencia tiene esta estructura:
 
-
-
 ### Definición de Stock {#defstock}
 
 Una forma de mirar el fenómeno de la exclusión educativa guarda relación con el movimiento de los estudiantes de un estado a otro. En este sentido, se entenderá como “stock” a una variable numérica que es una cantidad de estudiante en un año determinado, por ejemplo, un total acumulado de la cantidad de estudiantes matriculados en el año 2004 en primero básico. 
 
-
 Lo que se aprecia en la imagen como tipos de Stock: Educación Pre- escolar, Educación regular, Educación Adulta, Graduados de 4° medio, Abandonados Globales, Excluidos Globales y fallecidos. Sin embargo, en el script de R, así como en el contenido de las variables de las tablas originales de Stock y Flujos, los "Stock" se encuentra codificados mediante identificadores. 
 
-En detalle se encuentran explicados cada uno de los Sqtock [Anexo| Métricas Generales ](anexos.html#mg)
+En detalle se encuentran explicados cada uno de los Stock [Anexo| Métricas Generales ](anexos.html#mg)
 
 A continuación, se especifica cada uno de los identificadores, el nombre del identificador del Stock, así como la descripción.
  

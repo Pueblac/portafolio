@@ -17,5 +17,7 @@ navbar:
       href: TablaObservaciones.html
     - text: "Anexos"
       href: anexos.html
+    - text: "Dashboard"
+      href: https://pueblac.shinyapps.io/ShinyDashboard/
 
       
