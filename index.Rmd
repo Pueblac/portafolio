@@ -9,7 +9,8 @@ output:
     toc_float:
       collapsed: false
       smooth_scroll: true
-      
+
+runtime: shiny
 
       
 #Nivel 1
@@ -20,6 +21,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 
 
 # 2. Métricas | Reporte de Stock y Flujos

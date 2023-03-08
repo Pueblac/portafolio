@@ -225,11 +225,11 @@ $(document).ready(function () {
 
 <style type="text/css">
 
-#TOC {
+#section-TOC {
   margin: 25px 0px 20px 0px;
 }
 @media (max-width: 768px) {
-#TOC {
+#section-TOC {
   position: relative;
   width: 100%;
 }
@@ -304,7 +304,7 @@ div.tocify {
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
+<div id="section-TOC" class="tocify">
 </div>
 </div>
 
@@ -347,7 +347,7 @@ div.tocify {
   <a href="anexos.html">Anexos</a>
 </li>
 <li>
-  <a href="https://pueblac.shinyapps.io/ShinyDashboard/">Dashboard</a>
+  <a href="Dashboard.html">Dashboard</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -357,7 +357,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div id="header">
+<div id="section-header">
 
 
 
@@ -368,7 +368,8 @@ div.tocify {
 </div>
 
 
-<div id="métricas-reporte-de-stock-y-flujos" class="section level1">
+<div id="section-métricas-reporte-de-stock-y-flujos"
+class="section level1">
 <h1>2. Métricas | Reporte de Stock y Flujos</h1>
 <p>Las métricas, es el resultado de un cálculo que se desarrolla en base
 a la “Planilla de Stock y Flujos”. En esta planilla se encuentra la
@@ -379,7 +380,7 @@ matrícula fue determinado por los requisitos y características propias
 del Proyecto Fondef IT170006, y se puede incrementar de acuerdo al
 requerimiento de nuevos objetivos o finalidad que puedan surgir del
 mismo.</p>
-<div id="composición-de-stock-y-flujos" class="section level2">
+<div id="section-composición-de-stock-y-flujos" class="section level2">
 <h2>2.1 Composición de Stock y Flujos</h2>
 <p>Una forma de mirar el fenómeno de la exclusión educativa guarda
 relación con el movimiento de los estudiantes de un estado a otro. En
@@ -396,14 +397,15 @@ Stock”. En tanto, se identificaron 27 flujos, que se identifican entre
 los años 2004 al 2018 y que son profundizados en la cápsula
 “Definiciones de Flujos”.</p>
 </div>
-<div id="organización-del-contenido" class="section level2 tabset">
+<div id="section-organización-del-contenido"
+class="section level2 tabset">
 <h2 class="tabset">2.2 Organización del contenido</h2>
 <p>La tabla de salida de las métricas generales y por comuna, son el
 producto de diferentes cálculos que se especifican en la sección del
 “Script”. De igual modo, se especificará cuáles fueron las tablas de
 entrada y de salida, así como las definiciones de Stock y Flujo, en cada
 cápsula explicada a continuación.</p>
-<div id="script" class="section level3">
+<div id="section-script" class="section level3">
 <h3>Script</h3>
 <p>Para el cálculo de las las métricas, al igual que otros componentes
 de esta documentación, se requiere de un script principal o script
@@ -964,7 +966,7 @@ library(haven)
 setwd(&quot;C:/FONDEF/StockyFlujos/regiones/Scripts&quot;)
 source(&quot;4.4RenombrarYGuardar.R&quot;)</code></pre>
 </div>
-<div id="tablas-de-origen" class="section level3">
+<div id="section-tablas-de-origen" class="section level3">
 <h3>Tablas de Origen</h3>
 <ol style="list-style-type: decimal">
 <li>Tabla de Stock y Flujos</li>
@@ -998,9 +1000,10 @@ DataFrame.R</a></p>
 <p>En caso de querer obtener una visión más específica, de los atributos
 del MRUN, es necesario combinarla con otras tablas que contengan más
 información de los estudiantes. De igual modo, en <a
-href="#dataframe">Anexo | 2.3.2 DataFrame.R</a> queda explicado.</p>
+href="#section-dataframe">Anexo | 2.3.2 DataFrame.R</a> queda
+explicado.</p>
 </div>
-<div id="tablas-de-salida" class="section level3">
+<div id="section-tablas-de-salida" class="section level3">
 <h3>Tablas de salida</h3>
 <p>Corresponde al resultado de la unión de las tablas de incidencia,
 prevalencia y stock y flujos. Que se genera con el escript que está
@@ -1086,7 +1089,7 @@ a la población.</p></li>
 </ul>
 <p>LA tabla de salida de la prevalencia tiene esta estructura:</p>
 </div>
-<div id="defstock" class="section level3">
+<div id="section-defstock" class="section level3">
 <h3>Definición de Stock</h3>
 <p>Una forma de mirar el fenómeno de la exclusión educativa guarda
 relación con el movimiento de los estudiantes de un estado a otro. En
@@ -1177,7 +1180,7 @@ adulta”t-1”</td>
 </tbody>
 </table>
 </div>
-<div id="defflujo" class="section level3">
+<div id="section-defflujo" class="section level3">
 <h3>Definición de Flujos</h3>
 <p>Una forma de mirar el fenómeno de la exclusión educativa guarda
 relación con el movimiento de los estudiantes de un estado a otro.
@@ -1401,7 +1404,7 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function () {
-  window.buildTabsets("TOC");
+  window.buildTabsets("section-TOC");
 });
 
 $(document).ready(function () {
@@ -1439,7 +1442,7 @@ $(document).ready(function ()  {
     options.smoothScroll = true;
 
     // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
+    var toc = $("#section-TOC").tocify(options).data("toc-tocify");
 });
 </script>
 

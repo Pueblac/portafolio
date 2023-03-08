@@ -18,6 +18,6 @@ navbar:
     - text: "Anexos"
       href: anexos.html
     - text: "Dashboard"
-      href: https://pueblac.shinyapps.io/ShinyDashboard/
+      href: Dashboard.html
 
       
