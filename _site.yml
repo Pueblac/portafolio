@@ -19,5 +19,6 @@ navbar:
       href: anexos.html
     - text: "Dashboard"
       href: Dashboard.html
+runtime: shiny
 
       
