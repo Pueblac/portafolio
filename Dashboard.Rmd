@@ -1,8 +1,8 @@
 ---
-title: "La caeza de crío es proporcional a sus ojeras"
+title: "Transparencia en Chile"
 output: html_document
 ---
 
-El crío tiene la manza caeza:
+Transparencia en el Estado:
 
 <iframe height="400" width="100%" frameborder="no" src="https://pueblac.shinyapps.io/Cabezon/"> </iframe>
