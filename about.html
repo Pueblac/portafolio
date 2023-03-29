@@ -373,36 +373,33 @@ más de 9 años de experiencia en análisis de datos, automatización de
 reportes, diseño y visualización de información. Me considero metódico,
 proactivo, y disfruto trabajar en equipos multidisciplinarios para
 abordar desafíos tanto públicos como privados. He coordinado proyectos
-en la Universidad de Chile, asesorado a la Municipalidad de Peñalolén,
-trabajado en la SEREMI Educación de la Región Metropolitana y en el
-Consejo para la Transparencia.</p>
+en la Universidad de Chile, trabajado en la SEREMI Educación de la
+Región Metropolitana, en el Consejo para la Transparencia, asesorado
+municipalidades, fundaciones y actualmente me desempeño en el Instituto
+Nacional de Estadísticas de Chile (INE).</p>
 <div id="contenido" class="section level1 unnumbered">
 <h1 class="unnumbered">Contenido</h1>
 <p>La presente documentación tiene como objetivo mostrar el uso de
-<em>script</em>, archivos, así como tablas de entrada y salida, en el
-marco de un proyecto desarrollado en R y puesto a disposición de
-cualquier persona que quisiera replicarlo.</p>
-<p>Dicho lo anterior, se recalca que como portafolio los algoritmos,
-funciones, imágenes y bases de datos si bien puedan ser replicados, no
-son generalizables o extrapolables.</p>
-<p>Se profundizará en seis contenidos:</p>
+<em>script</em>, archivos, así como tablas de entrada y salida, así como
+disponerlas para que cualquier persona que quisiera pudiera
+replicarlo.</p>
+<p>Dicho lo anterior, se recalca que como portafolio la finalidad de
+esta documentación es mostrar algoritmos, funciones, imágenes y bases de
+datos, sin embargo, los resultados o el producto de dichos documentos,
+no tienen la finalidad de ser generalizables o extrapolables.</p>
+<p>Se profundizará en 5 contenidos:</p>
 <ul>
-<li>Procesamiento de datos en Rstudio: Tiene en cuenta aspectos técnicos
-del uso de Rstudio.</li>
-<li>Cálculo de Métricas: Se revisarán Stock y flujos, así como el modo
-de llegar a la prevalencia e incidencia como principales productos.</li>
-<li>Estadística descriptiva: Trata del Nivel Socioeconómico, como
-cálculo surgido del ingreso familiar, nivel de estudios del padre y de
-la madre, a partir de datos administrativos provenientes del SIMCE.</li>
+<li>Problema y pregunta de investigación</li>
+<li>Procesamiento de la información.</li>
+<li>Dashboard: Muestra el complemento entre Shinyapp, FlexDashboard y el
+uso de Rmarkdown</li>
+<li>Reportes Automatizados: Generación de documentos que se actualizan
+de acuerdo a la necesidad del usuario.</li>
 <li>Estadística multivariada: Tabla que reúne los datos de los
 estudiantes de las cohortes estudiadas (2004 a 2008), en tanto, el
 alcance es hasta el año 2018.</li>
 <li>Tablas y Gráficos:Tabla que resume los datos de los estudiantes de
 la tabla de trayectorias.</li>
-<li>Dashboard: Muestra el complemento entre Shinyapp, FlexDashboard y el
-uso de Rmarkdown</li>
-<li>Reportes Automatizados: Generación de documentos que se actualizan
-de acuerdo a la necesidad del usuario.</li>
 <li>Anexos: Detalle del los algoritmos utilizados.</li>
 </ul>
 <div id="uso-de-github-y-rmarkdown" class="section level2 unnumbered">
@@ -422,6 +419,67 @@ paneles dinámicos, entre otros.</p>
 <p>Para el control de cambios del presente proyecto se utiliza <a
 href="https://git-scm.com/">Git</a>, el cual registra las distintas
 versiones de un archivo (o conjunto de archivos).</p>
+</div>
+<div id="procesamiento-en-rstudio" class="section level2">
+<h2>Procesamiento en Rstudio</h2>
+<p>Para la secuencia de comandos utilizados en el procesamiento de
+información y cálculo de métricas, se utilizó la versión de escritorio
+de Rstudio, que permite localmente obtener resultados de la sintaxis,
+codificación e indentación del código de R.</p>
+<p>Siendo necesario añadir que previa instalación de Rstudio, se debe
+instalar entorno de ‘R’, que compila y ejecuta directamente el lenguaje
+R para Windows y/o para Rstudio. Ambos links se encuentran a
+continuación:</p>
+<ul>
+<li><p><a href="https://cran.r-project.org/bin/windows/base/">R</a> -
+HTML a la versión instalable y ejecutable de R 4.0.2.</p></li>
+<li><p><a
+href="https://rstudio.com/products/rstudio/download/#download">Rstudio</a>
+- HTML a la descarga de la versión más reciente de Rstudio.)</p></li>
+</ul>
+</div>
+<div id="por-qué-no-se-utilizó-sqlsever" class="section level2">
+<h2>Por qué no se utilizó SQLSever</h2>
+<p>Existe una transición en el procesamiento de los datos y la carga de
+origen. Durante los años previos, el análisis de los datos se realizaba
+en <a
+href="https://www.microsoft.com/en-us/download/details.aspx?id=56040">SQLServer
+2012 Standar versión 6.3.9600</a> (en adelante SQLServer), en
+complemento con <a
+href="https://rstudio.com/products/rstudio/older-versions/">RStudio
+versión 1.1.463</a>. Actualmente se realiza todo en la última versión de
+Rstudio.</p>
+<p>La principal razón que motivó el cambio, es debido a que al ser
+Rstudio requiere tres cosas para conectarse a SQLServer:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Una conexión segura que permita la comunicación entre máquinas:
+Lo cual estaba asegurado mediante el servicio otorgado por la VPS
+(escritorio remoto), contrato que cumplió el periodo acordado y por
+tanto, fue necesario migrar a un sistema que permitiera realizar
+cálculos mediante un servidor local.</p></li>
+<li><p>Drivers instalados para R server: Los cuales en el año 2020
+dejaron de ser proporcionados mediante el paquete “RevoScaleR”, que
+permite establecer la conexión entre Rstudio y SQLServer. Entre las
+limitaciones encontradas se comprobó que:<br />
+</p></li>
+</ol>
+<ul>
+<li>El paquete “RevoScaleR” estaba destinado a ser utilizado con un
+servidor remoto, para procesar el conjunto de datos, sin embargo, se
+necesita un servidor remoto y una edición completa de SQLServer.</li>
+<li>El paquete no es de fácil instalación, ejecutando “install.packages
+(”RevoScaleR”) como la mayoría de los paquetes R.</li>
+<li>Está disponible solo a través de Microsoft R Client, la distribución
+de R para ciencia de datos.</li>
+<li>Está hecha para la versión R 3.5.2, en tanto, la mayor parte de los
+paquetes utilizados para el análisis corresponden a la versión
+4.0.2.</li>
+</ul>
+<p>Por las razones anteriores, que las tablas que se utilicen vas a ser
+transformadas a formato RDS. Este formato es especialmente útil cuando
+se tienen datos grandes que necesitan ser cargados con frecuencia, ya
+que el tiempo de lectura y escritura de archivos RDS es generalmente más
+rápido que el de otros formatos como CSV o Excel.</p>
 </div>
 </div>
 
